@@ -1,0 +1,28 @@
+
+<nav class="navbar navbar-dark bg-primary">
+  <a class="navbar-brand">Navbar</a>
+  <form class="form-inline">
+    <div *ngIf="info.token">
+        Xin Chào:<b>{{info.username}}</b>
+        Với Quyền:<b>{{info.authorities}}</b>
+      <button type="button" routerLink="/signup" class="btn btn-info" style="margin: 0px 5px 0px 5px">Tạo mới tài khoản người dùng</button>
+    <button class="btn badge-secondary my-2 my-sm-0" (click)="logout()" type="submit">Đăng xuất</button>
+    </div>
+  </form>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      <div id="list-example" class="list-group">
+        <a class="list-group-item list-group-item-action" routerLink="/company/add">Thêm công ty</a>
+        <a class="list-group-item list-group-item-action" [routerLink]="['#']">Item 2</a>
+        <a class="list-group-item list-group-item-action" [routerLink]="['#']">Item 3</a>
+        <a class="list-group-item list-group-item-action" [routerLink]="['#']">Item 4</a>
+      </div>
+    </div>
+    <div class="col-9">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,109 @@
+<div class="container-login100" style="background-image: url('../../assets/Login_v9/images/nen.png');">
+  <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
+    <form class="login100-form validate-form" [formGroup]="fSignup" (ngSubmit)="onSubmit()">
+				<span class="login100-form-title p-b-37">
+					Đăng ký
+				</span>
+      <div *ngIf="isSignUpFailed" style="color: red">
+        {{errorMessage}}
+      </div>
+      <div *ngIf="isSignedUp" style="color: red">
+        {{Successmessage}}
+      </div>
+      <!-- username-->
+      <div class="wrap-input100 validate-input m-b-20" data-validate="Enter username or email">
+        <input class="input100" type="text" placeholder="Điền tên đăng nhập" formControlName="username">
+        <span class="focus-input100"></span>
+      </div>
+      <div *ngIf="fSignup.controls.username?.errors?.required && fSignup.controls.username?.touched">
+        <p style="color: red">Không được để trống !!
+        <p>
+      </div>
+      <div *ngIf="fSignup.controls.username?.errors?.minlength">
+        <p style="color: red">ít nhất 4 ký tự !!
+        <p>
+      </div>
+      <!-- username-->
+
+
+      <!--      email-->
+      <div class="wrap-input100 validate-input m-b-25" data-validate="Enter password">
+        <input class="input100" type="text" name="email" placeholder="Điền địa chỉ email" formControlName="email">
+        <span class="focus-input100"></span>
+      </div>
+      <div *ngIf="fSignup.controls.email?.errors?.required && fSignup.controls.email?.touched">
+        <p style="color: red">Không được để trống!!
+        <p>
+      </div>
+      <div *ngIf="fSignup.controls.email?.errors?.email">
+        <p style="color: red">Không đúng định dạng email!!
+        <p>
+      </div>
+      <!--email-->
+
+      <!--      password-->
+      <div class="wrap-input100 validate-input m-b-25" data-validate="Enter password">
+        <input class="input100" type="password" name="password" placeholder="Điền password" formControlName="password">
+        <span class="focus-input100"></span>
+      </div>
+      <div *ngIf="fSignup.controls.password?.errors?.required && fSignup.controls.password?.touched">
+        <p style="color: red">Không được để trống !!
+        <p>
+      </div>
+      <div *ngIf="fSignup.controls.password?.errors?.minlength">
+        <p style="color: red">ít nhất 4 ký tự!!
+        <p>
+      </div>
+      <!--      password-->
+      <!--      confirmPassword-->
+      <div class="wrap-input100 validate-input m-b-25" data-validate="Enter password">
+        <input class="input100" type="password" name="confirmPassword" placeholder="Nhập lại password"
+               formControlName="confirmPassword">
+        <span class="focus-input100"></span>
+      </div>
+      <div *ngIf="fSignup.controls.confirmPassword?.errors?.required && fSignup.controls.confirmPassword?.touched">
+        <p style="color: red">Không được để trống !!
+        <p>
+      </div>
+      <div *ngIf="fSignup.controls.confirmPassword?.errors?.minlength">
+        <p style="color: red">ít nhất 4 ký tự!!
+        <p>
+      </div>
+      <div *ngIf="fSignup.get('confirmPassword').value != fSignup.get('password').value">
+        <p style="color: red">Không trùng với password!!
+        <p>
+      </div>
+      <!--      confirmPassword-->
+      <div class="container-login100-form-btn">
+        <button class="login100-form-btn">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1" ></span>
+          Đăng ký
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!--===============================================================================================-->
+<script src="../../assets/Login_v9/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="../../assets/Login_v9/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="../../assets/Login_v9/vendor/bootstrap/js/popper.js"></script>
+<script src="../../assets/Login_v9/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="../../assets/Login_v9/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="../../assets/Login_v9/vendor/daterangepicker/moment.min.js"></script>
+<script src="../../assets/Login_v9/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="../../assets/Login_v9/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="../../assets/Login_v9/js/main.js"></script>
+
+
+
+
+
+

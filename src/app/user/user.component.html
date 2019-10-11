@@ -1,0 +1,71 @@
+<nav class="navbar navbar-dark bg-primary">
+  <a class="navbar-brand">Navbar</a>
+  <div *ngIf="info.token">
+    Xin Chào:<b>{{info.username}}</b>
+    Với Quyền:<b>{{info.authorities}}</b>
+
+    <button class="btn badge-secondary my-2 my-sm-0" (click)="logout()" type="submit">Đăng xuất</button>
+  </div>
+</nav>
+<!--enctype="multipart/form-data"-->
+<div *ngIf="user" id="formedituser">
+  <h1>Form Edit User</h1>
+  <div *ngIf="message">
+    <span style="color: red">{{message}}</span>
+  </div>
+  <div *ngIf="messageImg">
+    <span style="color: red">{{messageImg}}</span>
+  </div>
+  <form [formGroup]="formUser"  (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div class="form-group">
+      <label>BirthDate</label>
+      <input  type="date" class="form-control col-7" name="birthdate" [(ngModel)]="user.birthdate"  formControlName="birthdate">
+    </div>
+    <div  *ngIf="formUser.controls.birthdate?.errors?.required && formUser.controls.birthdate?.touched">
+      <span style="color: red">birthDate is required!!</span>
+    </div>
+
+    <div class="form-group">
+      <label>Address</label>
+      <input type="text" class="form-control col-7" name="address" [(ngModel)]="user.address"  formControlName="address">
+    </div>
+    <div  *ngIf="formUser.controls.address?.errors?.required && formUser.controls.address?.touched">
+      <span style="color: red"> Địa chỉ không được để trống</span>
+    </div>
+
+
+
+    <div class="form-group">
+      <label>PhoneNumber</label>
+      <input type="text" class="form-control col-7" name="phonenumber" [(ngModel)]="user.phonenumber" formControlName="phonenumber">
+    </div>
+   <div *ngIf="formUser.controls.phonenumber?.errors?.pattern">
+     <span style="color: red">Bắt đầu từ số không, và từ 10 - 11 số!!</span>
+   </div>
+    <div *ngIf="formUser.controls.phonenumber?.errors?.required && formUser.controls.phonenumber?.touched">
+      <span style="color: red">Không được để trống!!</span>
+    </div>
+
+<!--    <img src='E:/BaitapProjectCuoiKhoa/C0319H2-Project-Backend/src/main/resources/imageUser/{{user.avatar}}'>-->
+    <div class="form-group">
+      <label>Avatar</label><br/>
+      {{user.avatar}}
+      <input type="file"  id="avatar" (change)="selectFile($event)">
+    </div>
+<!--    {{user.avatar}}-->
+
+<!--    <div class="form-group">-->
+<!--      <label for="avatar">Avatar</label>-->
+<!--      <input type="file" accept="image/*" id="avatar" (change)="onFileChange($event)" >-->
+<!--    </div>-->
+<!--    <img width="100" src='../../assets/anh/{{user.avatar}}'>-->
+
+    <div class="form-group">
+   <button class="btn btn-dark" type="submit" id="submit">
+     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+     EditUser</button>
+    </div>
+  </form>
+</div>
+
+
