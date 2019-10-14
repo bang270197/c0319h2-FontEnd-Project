@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {AppComponent} from './app.component';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
@@ -14,6 +14,7 @@ import {AuthGuardServiceService} from './auth/auth-guard-service.service';
 import {AuthGuard1ServiceService} from './auth/auth-guard1-service.service';
 import {ManagerComponent} from './manager/manager.component';
 import {UserServiceService} from './user/user-service.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -29,7 +30,9 @@ import {UserServiceService} from './user/user-service.service';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatCheckboxModule
 
   ],
   providers: [httpInterceptorProviders, AuthGuardServiceService, AuthGuard1ServiceService, UserServiceService],

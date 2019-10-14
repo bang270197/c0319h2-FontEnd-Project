@@ -4,7 +4,9 @@ import {CompanyserviceService} from '../companyservice.service';
 import {TechnologyServiceService} from '../../technology/technology-service.service';
 import {Technology} from '../../technology/technology';
 import {Observable} from 'rxjs';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {chainedInstruction} from '@angular/compiler/src/render3/view/util';
+
 
 @Component({
   selector: 'app-add',
@@ -16,14 +18,15 @@ export class AddComponent implements OnInit {
   company: Company;
   message;
   technology: Technology[];
-  tech: Technology[];
-  newTechnology: Technology;
+  ArrayTechnology: number[] = [];
+  newTechnology: Technology[] = [];
   relationship = ['Doi tac', 'Khach hang'];
   specialize = ['Product', 'outsourcing'];
   language = ['php', 'java', '.net'];
   market = ['Nhat', 'Viet Nam', 'Eu'];
   active = ['true', 'false'];
   formCompany: FormGroup;
+  temArr: any = {brands: []};
 
   constructor(private companyService: CompanyserviceService,
               private technologyService: TechnologyServiceService,
@@ -58,11 +61,32 @@ export class AddComponent implements OnInit {
     });
   }
 
-  getTechByid(id) {
-    this.technologyService.getTechnologyById(id).subscribe(technology => {
-      this.newTechnology = technology;
-    });
+  onCheckboxChange(event, tech: Technology) {
+    if (event.target.checked) {
+      this.ArrayTechnology.push(tech.id);
+    } else {
+      for (let i = 0; i < this.technology.length; i++) {
+        if (this.ArrayTechnology[i] === tech.id) {
+          this.ArrayTechnology.splice(i, 1);
+        }
+      }
+    }
+
+    for (let j = 0; j < this.ArrayTechnology.length; j++) {
+      if (this.ArrayTechnology[j] != null) {
+        this.technologyService.getTechnologyById(this.ArrayTechnology[j]).subscribe(newTech => {
+          this.newTechnology.push(newTech);
+        });
+      }
+    }
+    // alert(this.ArrayTechnology);
   }
+
+  // getTechByid(id) {
+  //   this.technologyService.getTechnologyById(id).subscribe(technology => {
+  //     this.newTechnology = technology;
+  //   });
+  // }
 
   onSubmit() {
     this.company = new Company(
@@ -78,7 +102,8 @@ export class AddComponent implements OnInit {
       this.formCompany.get('language').value,
       this.formCompany.get('market').value,
       this.formCompany.get('note').value,
-      this.formCompany.get('active').value
+      this.formCompany.get('active').value,
+      this.newTechnology
     );
     this.companyService.createCompany(this.company).subscribe(() => {
       this.message = 'Them thanh cong!!';
@@ -89,5 +114,4 @@ export class AddComponent implements OnInit {
       this.companyService.handleError(error);
     });
   }
-
 }

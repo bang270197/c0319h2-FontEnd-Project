@@ -4,7 +4,6 @@ import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Company} from './company';
 import {Technology} from '../technology/technology';
-import {FormCompany} from './FormCompany';
 const httpOption = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
@@ -19,11 +18,11 @@ export class CompanyserviceService {
   constructor(private http: HttpClient) {
   }
 
-  editActive(formCompany: FormCompany): Observable<any> {
-    return this.http.put(this.activeUrl + '/' + formCompany.id, formCompany, httpOption).pipe(
-      catchError(this.handleError)
-    );
-  }
+  // editActive(formCompany: FormCompany): Observable<any> {
+  //   return this.http.put(this.activeUrl + '/' + formCompany.id, formCompany, httpOption).pipe(
+  //     catchError(this.handleError)
+  //   );
+  // }
 
   getAllCompany(): Observable<Company[]> {
     return this.http.get<Company[]>(this.companyUrl);

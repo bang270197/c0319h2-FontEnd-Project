@@ -8,6 +8,9 @@ import {ViewComponent} from './view/view.component';
 import {AuthGuardServiceService} from '../auth/auth-guard-service.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import { DeleteComponent } from './delete/delete.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
+
 
 const routes: Routes = [
   {path: 'list', component: ListComponent, canActivate: [AuthGuardServiceService]},
@@ -23,7 +26,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCheckboxModule
   ]
 })
 export class CompanyModule {

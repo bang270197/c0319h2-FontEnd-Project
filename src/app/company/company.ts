@@ -48,7 +48,8 @@ export class Company {
   note: string;
 
   active: boolean;
-  constructor(companyName: string, shortname: string, address: string, website: string, phonenumber: number, email: string, introductoryinformation: string, relationship: string, specialize: string, language: string, market: string, note: string, active: boolean) {
+
+  constructor(companyName: string, shortname: string, address: string, website: string, phonenumber: number, email: string, introductoryinformation: string, relationship: string, specialize: string, language: string, market: string, note: string, active: boolean, technology: Technology[]) {
     this.companyName = companyName;
     this.shortname = shortname;
     this.address = address;
@@ -62,5 +63,6 @@ export class Company {
     this.market = market;
     this.note = note;
     this.active = active;
+    this.technology = technology;
   }
 }
