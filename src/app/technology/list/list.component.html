@@ -1,0 +1,26 @@
+<h1 style="text-align: center">Danh Sách Công Nghệ</h1>
+<div class="container">
+  <table class="table">
+    <thead>
+    <tr>
+      <th colspan="5"><button type="button"  routerLink="/technology/add" class="btn btn-success">Thêm công nghệ</button>
+      </th>
+    </tr>
+    <tr>
+      <th scope="col" style="text-align: center">#</th>
+      <th scope="col" style="text-align: center">Name</th>
+      <th scope="col" colspan="3" style="text-align: center">Option</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let tech of technology; index as i ">
+      <th scope="row">{{i +1}}</th>
+      <td>{{tech.name}}</td>
+      <td><button type="button" class="btn btn-primary">Edit</button></td>
+      <td><button type="button" class="btn btn-danger">Xoa</button></td>
+      <td><button type="button" class="btn btn-light">View</button></td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>

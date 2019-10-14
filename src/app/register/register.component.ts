@@ -51,7 +51,6 @@ export class RegisterComponent implements OnInit {
         this.isSignedUp = true;
         this.isSignUpFailed = false;
         this.Successmessage = 'Đăng ký thành công!!';
-
         this.route.navigate(['/manager']);
         this.loading = false;
       },

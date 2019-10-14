@@ -1,1 +1,61 @@
-<p>list works!</p>
+<h1 style="text-align: center">Danh Sách Công Ty</h1>
+<div class="container">
+  <table class="table">
+    <thead>
+    <tr>
+      <th colspan="16">
+        <button type="button" routerLink="/company/add" class="btn btn-success">Thêm công ty</button>
+      </th>
+    </tr>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Company Name</th>
+      <th scope="col">ShorName</th>
+      <th scope="col">Address</th>
+      <th scope="col">Website</th>
+      <th scope="col">Phone Number</th>
+      <th scope="col">Email</th>
+      <th scope="col">Introductory</th>
+      <th scope="col">Relationship</th>
+      <th scope="col">Specialize</th>
+      <th scope="col">Langguage</th>
+      <th scope="col">Market</th>
+      <th scope="col">Note</th>
+      <th scope="col">Active</th>
+      <th scope="col" colspan="3" style="text-align: center">Option</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let com of listCompany; index as i" >
+      <div *ngIf="com.active">
+        <th  scope="row">{{i + 1}}</th>
+        <td>{{com.companyName}}</td>
+        <td>{{com.shortname}}</td>
+        <td>{{com.address}}</td>
+        <td>{{com.website}}</td>
+        <td>{{com.phonenumber}}</td>
+        <td>{{com.email}}</td>
+        <td>{{com.introductoryinformation}}</td>
+        <td>{{com.relationship}}</td>
+        <td>{{com.specialize}}</td>
+        <td>{{com.language}}</td>
+        <td>{{com.market}}</td>
+        <td>{{com.note}}</td>
+        <td>{{com.active}}</td>
+        <td>
+          <button type="button" class="btn btn-primary" routerLink="/company/edit/{{com.id}}" >Edit</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger"  >Xoa</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-light" routerLink="/company/view/{{com.id}}">View</button>
+        </td>
+      </div>
+
+
+    </tr>
+    </tbody>
+  </table>
+</div>
+

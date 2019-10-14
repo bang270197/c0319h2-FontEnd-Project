@@ -64,8 +64,6 @@ export class UserComponent implements OnInit {
 
 
   onSubmit() {
-
-
     this.loading = true;
     if (this.file != null) {
       this.formData.append('username', this.user.username);

@@ -34,7 +34,12 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-  {path: 'company', loadChildren: './company/company.module#CompanyModule'}
+  {
+    path: 'company', loadChildren: './company/company.module#CompanyModule'
+  },
+  {
+    path: 'technology', loadChildren: './technology/technology.module#TechnologyModule'
+  }
 ];
 
 @NgModule({

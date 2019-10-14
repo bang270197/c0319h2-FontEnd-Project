@@ -1,1 +1,142 @@
-<p>add works!</p>
+<button type="button" class="btn btn-warning" routerLink="/company/list">Về trang danh sách</button>
+<div class="container">
+  <div *ngIf="message">
+    <span style="color:red ">{{message}}</span>
+  </div>
+  <form [formGroup]="formCompany" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label><h3>Company Name</h3></label>
+      <input type="text" class="form-control col-6" placeholder="Enter companyName" formControlName="companyName">
+    </div>
+
+
+    <div class="form-group">
+      <label><h3>Short Name</h3></label>
+      <input type="text" class="form-control col-6" placeholder="Enter shortname" formControlName="shortname">
+    </div>
+
+
+    <div class="form-group">
+      <label><h3>Address</h3></label>
+      <input type="text" class="form-control col-6" placeholder="Enter address" formControlName="address">
+    </div>
+
+
+    <div class="form-group">
+      <label><h3>Website</h3></label>
+      <input type="text" class="form-control col-6" placeholder="Enter website" formControlName="website">
+    </div>
+
+    <div class="form-group">
+      <label><h3>Phonenumber</h3></label>
+      <input type="text" class="form-control col-6"   placeholder="Enter phonenumber" formControlName="phonenumber">
+    </div>
+
+
+    <div class="form-group">
+      <label><h3>Email</h3></label>
+      <input type="text" class="form-control col-6" name="email" placeholder="Enter Email" formControlName="email">
+    </div>
+
+
+
+    <div class="form-group">
+      <label><h3>Introductory</h3></label>
+      <textarea class="form-control" rows="5" cols="5" name="introductoryinformation" formControlName="introductoryinformation"></textarea>
+    </div>
+
+
+
+
+
+    <div class="form-group">
+      <label><h3>Relationship</h3></label>
+      <div *ngFor="let rela of relationship">
+            <div class="form-check">
+            <input class="form-check-input" type="radio" name="relationship" formControlName="relationship"   value="{{rela}}">
+            <label class="form-check-label" >
+              {{rela}}
+            </label>
+          </div>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label><h3>specialize</h3></label>
+      <div *ngFor="let spec of specialize">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="specialize" formControlName="specialize"  value="{{spec}}">
+          <label class="form-check-label">{{spec}}</label>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label><h3>Language</h3></label>
+      <div *ngFor="let lang of language">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="language" formControlName="language"  value="{{lang}}">
+          <label class="form-check-label">{{lang}}</label>
+        </div>
+      </div>
+    </div>
+
+
+<!--    <div class="form-group">-->
+<!--      <label><h3>Technology</h3></label>-->
+<!--      <div *ngFor="let tech of technology">-->
+<!--        <div class="form-check form-check-inline">-->
+<!--          <input class="form-check-input" (click)="getTechByid(tech.id)"  type="checkbox" name="technology"  formControlName="technology" >-->
+<!--          <label class="form-check-label" >{{tech.name}}</label>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+
+    <div class="form-group">
+      <label><h3>Market</h3></label>
+      <div *ngFor="let mar of market">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="market" formControlName="market"  value="{{mar}}">
+          <label class="form-check-label">{{mar}}</label>
+        </div>
+      </div>
+    </div>
+
+
+<!--    <div class="form-group">-->
+<!--      <label>Avatar</label><br/>-->
+<!--&lt;!&ndash;      {{user.avatar}}&ndash;&gt;-->
+<!--      <input type="file"  id="avatar" (change)="selectFile($event)">-->
+<!--    </div>-->
+
+
+    <div class="form-group">
+      <label><h3>Note</h3></label>
+      <textarea class="form-control" rows="5" cols="5" name="note" formControlName="note"></textarea>
+    </div>
+
+
+    <div class="form-group">
+      <label><h3>Active</h3></label>
+      <div *ngFor="let ac of active">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="active" formControlName="active"  value="{{ac}}">
+          <label class="form-check-label">{{ac}}</label>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">
+        <!--        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>-->
+        Thêm mới
+      </button>
+    </div>
+  </form>
+</div>
+
+{{formCompany.value | json}}
