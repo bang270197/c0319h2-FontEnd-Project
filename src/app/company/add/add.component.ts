@@ -59,9 +59,9 @@ export class AddComponent implements OnInit {
   }
 
   getTechByid(id) {
-   this.technologyService.getTechnologyById(id).subscribe( technology =>{
-     this.newTechnology = technology;
-   });
+    this.technologyService.getTechnologyById(id).subscribe(technology => {
+      this.newTechnology = technology;
+    });
   }
 
   onSubmit() {

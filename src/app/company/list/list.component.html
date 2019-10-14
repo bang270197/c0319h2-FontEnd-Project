@@ -26,36 +26,35 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let com of listCompany; index as i" >
-      <div *ngIf="com.active">
-        <th  scope="row">{{i + 1}}</th>
-        <td>{{com.companyName}}</td>
-        <td>{{com.shortname}}</td>
-        <td>{{com.address}}</td>
-        <td>{{com.website}}</td>
-        <td>{{com.phonenumber}}</td>
-        <td>{{com.email}}</td>
-        <td>{{com.introductoryinformation}}</td>
-        <td>{{com.relationship}}</td>
-        <td>{{com.specialize}}</td>
-        <td>{{com.language}}</td>
-        <td>{{com.market}}</td>
-        <td>{{com.note}}</td>
-        <td>{{com.active}}</td>
-        <td>
-          <button type="button" class="btn btn-primary" routerLink="/company/edit/{{com.id}}" >Edit</button>
-        </td>
-        <td>
-          <button type="button" class="btn btn-danger"  >Xoa</button>
-        </td>
-        <td>
-          <button type="button" class="btn btn-light" routerLink="/company/view/{{com.id}}">View</button>
-        </td>
-      </div>
+    <tr *ngFor="let com of listCompany"  >
 
+      <th  scope="row">{{com.id}}</th>
+      <td>{{com.companyName}}</td>
+      <td>{{com.shortname}}</td>
+      <td>{{com.address}}</td>
+      <td>{{com.website}}</td>
+      <td>{{com.phonenumber}}</td>
+      <td>{{com.email}}</td>
+      <td>{{com.introductoryinformation}}</td>
+      <td>{{com.relationship}}</td>
+      <td>{{com.specialize}}</td>
+      <td>{{com.language}}</td>
+      <td>{{com.market}}</td>
+      <td>{{com.note}}</td>
+      <td>{{com.active}}</td>
+      <td>
+        <button type="submit" class="btn btn-primary" routerLink="/company/edit/{{com.id}}" >Edit</button>
+      </td>
+      <td>
+<!--        <button type="submit" class="btn btn-danger" (change)="deleteCompany(4)">Xoa</button>-->
+      </td>
+      <td>
+        <button type="submit" class="btn btn-light" routerLink="/company/view/{{com.id}}">View</button>
+      </td>
 
     </tr>
     </tbody>
   </table>
 </div>
+
 

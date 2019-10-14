@@ -20,7 +20,6 @@ export class UserComponent implements OnInit {
   messageImg;
   message;
   formData = new FormData();
-  formData1 = new FormData();
   loading = false;
   imageFileName = '';
 

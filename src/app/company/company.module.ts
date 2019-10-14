@@ -7,17 +7,19 @@ import {RouterModule, Routes} from '@angular/router';
 import {ViewComponent} from './view/view.component';
 import {AuthGuardServiceService} from '../auth/auth-guard-service.service';
 import {ReactiveFormsModule} from '@angular/forms';
+import { DeleteComponent } from './delete/delete.component';
 
 const routes: Routes = [
   {path: 'list', component: ListComponent, canActivate: [AuthGuardServiceService]},
   {path: 'edit/:id', component: EditComponent, canActivate: [AuthGuardServiceService]},
   {path: 'view/:id', component: ViewComponent, canActivate: [AuthGuardServiceService]},
-  {path: 'add', component: AddComponent, canActivate: [AuthGuardServiceService]}
+  {path: 'add', component: AddComponent, canActivate: [AuthGuardServiceService]},
+  {path: 'delete/:id', component: DeleteComponent, canActivate: [AuthGuardServiceService]}
 ];
 
 
 @NgModule({
-  declarations: [ListComponent, AddComponent, EditComponent, ViewComponent],
+  declarations: [ListComponent, AddComponent, EditComponent, ViewComponent, DeleteComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
