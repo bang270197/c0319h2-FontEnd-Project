@@ -6,6 +6,7 @@ import {Technology} from '../../technology/technology';
 import {Observable} from 'rxjs';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {chainedInstruction} from '@angular/compiler/src/render3/view/util';
+import {HttpEvent, HttpEventType} from '@angular/common/http';
 
 
 @Component({
@@ -14,9 +15,10 @@ import {chainedInstruction} from '@angular/compiler/src/render3/view/util';
   styleUrls: ['./add.component.css']
 })
 export class AddComponent implements OnInit {
-
+  newCompany: Company;
   company: Company;
   message;
+  messageImg;
   technology: Technology[];
   ArrayTechnology: number[] = [];
   newTechnology: Technology[] = [];
@@ -27,6 +29,10 @@ export class AddComponent implements OnInit {
   active = ['true', 'false'];
   formCompany: FormGroup;
   temArr: any = {brands: []};
+  file: any;
+  imageLogo = '';
+  formData = new FormData();
+  id: number;
 
   constructor(private companyService: CompanyserviceService,
               private technologyService: TechnologyServiceService,
@@ -61,7 +67,17 @@ export class AddComponent implements OnInit {
     });
   }
 
+
+  selectFile(event) {
+    if (event.target.files.length > 0) {
+      this.file = event.target.files[0];
+      this.imageLogo = event.target.files[0].name;
+    }
+  }
+
+
   onCheckboxChange(event, tech: Technology) {
+  debugger;
     if (event.target.checked) {
       this.ArrayTechnology.push(tech.id);
     } else {
@@ -71,7 +87,7 @@ export class AddComponent implements OnInit {
         }
       }
     }
-
+    this.newTechnology = [];
     for (let j = 0; j < this.ArrayTechnology.length; j++) {
       if (this.ArrayTechnology[j] != null) {
         this.technologyService.getTechnologyById(this.ArrayTechnology[j]).subscribe(newTech => {
@@ -89,6 +105,8 @@ export class AddComponent implements OnInit {
   // }
 
   onSubmit() {
+
+
     this.company = new Company(
       this.formCompany.get('companyName').value,
       this.formCompany.get('shortname').value,
@@ -102,16 +120,46 @@ export class AddComponent implements OnInit {
       this.formCompany.get('language').value,
       this.formCompany.get('market').value,
       this.formCompany.get('note').value,
-      this.formCompany.get('active').value,
       this.newTechnology
     );
-    this.companyService.createCompany(this.company).subscribe(() => {
-      this.message = 'Them thanh cong!!';
+    this.companyService.createCompany(this.company).subscribe(newComapny => {
+      this.newCompany = newComapny;
+
+
+      if (this.file != null) {
+        this.formData.append('companylogo', this.file);
+        this.companyService.createLogo(this.newCompany.companyName, this.formData).subscribe(
+          (event: HttpEvent<any>) => {
+            switch (event.type) {
+              case HttpEventType.Sent:
+                console.log('Request has been made!');
+                break;
+              case HttpEventType.ResponseHeader:
+                console.log('Response header has been received!');
+                break;
+
+              case HttpEventType.Response:
+                console.log('User successfully updated!!', event.body);
+            }
+            // this.loading = false;
+            this.messageImg = 'Avatar uploaded successfully!';
+          },
+          error1 => {
+            this.messageImg = 'Failed to upload avatar!!. Cause: ' + error1.message;
+          }
+        );
+      }
+
+
+      // alert(`Detail: ${JSON.stringify(this.newCompany.companyName)}`);
+      this.message = 'Them Company thanh cong!!';
       alert('them thanh cong');
     }, error => {
       this.message = 'Them that bai!!';
       alert('them that bai');
       this.companyService.handleError(error);
     });
+
+
   }
 }

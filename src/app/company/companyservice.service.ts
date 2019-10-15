@@ -4,43 +4,55 @@ import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Company} from './company';
 import {Technology} from '../technology/technology';
+
 const httpOption = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
+
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyserviceService {
-  private logoUrlApi = 'http://localhost:8080/companyImg';
+  private logoUrlApi = 'http://localhost:8080/companyImg/';
   private companyUrl = 'http://localhost:8080/company';
-  private activeUrl = 'http://localhost:8080/comapnyEditActive';
+  private activeUrl = 'http://localhost:8080/changeActive';
 
   constructor(private http: HttpClient) {
   }
 
-  // editActive(formCompany: FormCompany): Observable<any> {
-  //   return this.http.put(this.activeUrl + '/' + formCompany.id, formCompany, httpOption).pipe(
-  //     catchError(this.handleError)
-  //   );
-  // }
+  changeActive(id: number): Observable<any> {
+    return this.http.put(this.activeUrl + '/' + id, httpOption).pipe(
+      catchError(this.handleError)
+    );
+  }
 
   getAllCompany(): Observable<Company[]> {
     return this.http.get<Company[]>(this.companyUrl);
   }
 
-  createCompany(formdata): Observable<any> {
-    return this.http.post(this.companyUrl, formdata);
+  createCompany(formdata): Observable<Company> {
+    return this.http.post<Company>(this.companyUrl, formdata);
   }
 
-  findByIdCompany(id: number): Observable<Company> {
+  getCompanyByid(id: number): Observable<Company> {
     return this.http.get<Company>(this.companyUrl + '/' + id);
   }
 
-  createLogo(formData): Observable<HttpEvent<any>> {
-    return this.http.post<any>(this.logoUrlApi, formData, {reportProgress: true, observe: 'events'}).pipe(
+  findBycompanyName(companyName: string): Observable<Company> {
+    return this.http.get<Company>(this.companyUrl + '/' + companyName);
+  }
+
+  createLogo(companyName: string, formdata): Observable<HttpEvent<any>> {
+    return this.http.post<any>(this.logoUrlApi + companyName, formdata, {reportProgress: true, observe: 'events'}).pipe(
       catchError(this.handleError)
     );
   }
+
+  // updateAvatar(formData): Observable<HttpEvent<any>> {
+  //   return this.http.post<any>(this.editAvatarUrl, formData, {reportProgress: true, observe: 'events'}).pipe(
+  //     catchError(this.handleError)
+  //   );
+  // }
 
 
   handleError(error: HttpErrorResponse) {

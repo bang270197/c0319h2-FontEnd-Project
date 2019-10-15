@@ -6,6 +6,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {HttpEvent, HttpEventType} from '@angular/common/http';
 
+const urlImgUser = 'http://localhost:8080/images/';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -67,23 +69,11 @@ export class UserComponent implements OnInit {
     if (this.file != null) {
       this.formData.append('username', this.user.username);
       this.formData.append('avatar', this.file);
-      this.userService.updateAvatar(this.formData).subscribe(
-        (event: HttpEvent<any>) => {
-          switch (event.type) {
-            case HttpEventType.Sent:
-              console.log('Request has been made!');
-              break;
-            case HttpEventType.ResponseHeader:
-              console.log('Response header has been received!');
-              break;
-
-            case HttpEventType.Response:
-              console.log('User successfully updated!!', event.body);
-          }
+      this.userService.updateAvatar(this.formData).subscribe(() => {
+          this.getUserNameByName();
           this.loading = false;
           this.messageImg = 'Avatar uploaded successfully!';
-        },
-        error1 => {
+        }, error1 => {
           this.messageImg = 'Failed to upload avatar!!. Cause: ' + error1.message;
         }
       );

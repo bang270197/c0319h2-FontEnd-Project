@@ -49,16 +49,17 @@
 <!--    <img src='E:/BaitapProjectCuoiKhoa/C0319H2-Project-Backend/src/main/resources/imageUser/{{user.avatar}}'>-->
     <div class="form-group">
       <label>Avatar</label><br/>
-      {{user.avatar}}
+
+      <img width="250px" src='http://localhost:8080/images/{{user.avatar}}'><br/>
       <input type="file"  id="avatar" (change)="selectFile($event)">
     </div>
-<!--    {{user.avatar}}-->
+<!--    -->
 
 <!--    <div class="form-group">-->
 <!--      <label for="avatar">Avatar</label>-->
 <!--      <input type="file" accept="image/*" id="avatar" (change)="onFileChange($event)" >-->
 <!--    </div>-->
-<!--    <img width="100" src='../../assets/anh/{{user.avatar}}'>-->
+<!--    -->
 
     <div class="form-group">
    <button class="btn btn-dark" type="submit" id="submit">

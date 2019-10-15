@@ -15,13 +15,13 @@
       <th scope="col">Website</th>
       <th scope="col">Phone Number</th>
       <th scope="col">Email</th>
-      <th scope="col">Introductory</th>
-      <th scope="col">Relationship</th>
-      <th scope="col">Specialize</th>
-      <th scope="col">Langguage</th>
-      <th scope="col">Market</th>
-      <th scope="col">Note</th>
-      <th scope="col">Active</th>
+<!--      <th scope="col">Introductory</th>-->
+<!--      <th scope="col">Relationship</th>-->
+<!--      <th scope="col">Specialize</th>-->
+<!--      <th scope="col">Langguage</th>-->
+<!--      <th scope="col">Market</th>-->
+<!--      <th scope="col">Note</th>-->
+<!--      <th scope="col">Active</th>-->
       <th scope="col" colspan="3" style="text-align: center">Option</th>
     </tr>
     </thead>
@@ -35,18 +35,18 @@
       <td>{{com.website}}</td>
       <td>{{com.phonenumber}}</td>
       <td>{{com.email}}</td>
-      <td>{{com.introductoryinformation}}</td>
-      <td>{{com.relationship}}</td>
-      <td>{{com.specialize}}</td>
-      <td>{{com.language}}</td>
-      <td>{{com.market}}</td>
-      <td>{{com.note}}</td>
-      <td>{{com.active}}</td>
+<!--      <td>{{com.introductoryinformation}}</td>-->
+<!--      <td>{{com.relationship}}</td>-->
+<!--      <td>{{com.specialize}}</td>-->
+<!--      <td>{{com.language}}</td>-->
+<!--      <td>{{com.market}}</td>-->
+<!--      <td>{{com.note}}</td>-->
+<!--      <td>{{com.active}}</td>-->
       <td>
         <button type="submit" class="btn btn-primary" routerLink="/company/edit/{{com.id}}" >Edit</button>
       </td>
       <td>
-<!--        <button type="submit" class="btn btn-danger" (change)="deleteCompany(4)">Xoa</button>-->
+        <button type="submit" class="btn btn-danger" (click)="changeActive(com.id)">Xoa</button>
       </td>
       <td>
         <button type="submit" class="btn btn-light" routerLink="/company/view/{{com.id}}">View</button>

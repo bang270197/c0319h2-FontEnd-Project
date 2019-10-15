@@ -36,6 +36,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
   ],
   providers: [httpInterceptorProviders, AuthGuardServiceService, AuthGuard1ServiceService, UserServiceService],
+  exports: [
+    ManagerComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

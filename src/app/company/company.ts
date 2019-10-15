@@ -49,7 +49,7 @@ export class Company {
 
   active: boolean;
 
-  constructor(companyName: string, shortname: string, address: string, website: string, phonenumber: number, email: string, introductoryinformation: string, relationship: string, specialize: string, language: string, market: string, note: string, active: boolean, technology: Technology[]) {
+  constructor(companyName: string, shortname: string, address: string, website: string, phonenumber: number, email: string, introductoryinformation: string, relationship: string, specialize: string, language: string, market: string, note: string, technology: Technology[]) {
     this.companyName = companyName;
     this.shortname = shortname;
     this.address = address;
@@ -62,7 +62,11 @@ export class Company {
     this.language = language;
     this.market = market;
     this.note = note;
-    this.active = active;
+    this.active = true;
     this.technology = technology;
+  }
+
+ ChanActive(active: boolean) {
+    this.active = active;
   }
 }

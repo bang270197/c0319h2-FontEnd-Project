@@ -13,6 +13,7 @@ export class ListComponent implements OnInit {
   company: Company;
   message;
   id;
+
   constructor(private companyService: CompanyserviceService) {
   }
 
@@ -27,5 +28,29 @@ export class ListComponent implements OnInit {
     }, error => {
       this.companyService.handleError(error);
     });
+  }
+
+  changeActive(id) {
+    this.companyService.getCompanyByid(id).subscribe(company => {
+      this.company = company;
+      // alert(JSON.stringify(this.company));
+
+      this.companyService.changeActive(this.company.id).subscribe(() => {
+       this.getAllCompany();
+        // alert('Da thay doi active thanh cong');
+      }, error => {
+        this.companyService.handleError(error);
+      });
+
+
+    }, error => {
+      this.companyService.handleError(error);
+    });
+
+
+  }
+
+  reload() {
+    window.location.reload();
   }
 }
