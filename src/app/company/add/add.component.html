@@ -49,13 +49,15 @@
 
 
 
+
+
     <div class="form-group">
       <label><h3>Relationship</h3></label>
       <div *ngFor="let rela of relationship">
             <div class="form-check">
-            <input class="form-check-input" type="radio" name="relationship" formControlName="relationship"   value="{{rela}}">
+            <input class="form-check-input" (change)="onCheckboxChangeRelationship(rela)"  type="radio" name="relationship" formControlName="relationship"   value="{{rela.id}}">
             <label class="form-check-label" >
-              {{rela}}
+              {{rela.name}}
             </label>
           </div>
       </div>
@@ -63,11 +65,11 @@
 
 
     <div class="form-group">
-      <label><h3>specialize</h3></label>
+      <label><h3>Specialize</h3></label>
       <div *ngFor="let spec of specialize">
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="specialize" formControlName="specialize"  value="{{spec}}">
-          <label class="form-check-label">{{spec}}</label>
+          <input class="form-check-input" value="{{spec.id}}" type="checkbox"  (change)="onCheckboxChangeSpecialize($event,spec)"  name="specialize" formControlName="specialize"  >
+          <label class="form-check-label">{{spec.name}}</label>
         </div>
       </div>
     </div>
@@ -77,8 +79,8 @@
       <label><h3>Language</h3></label>
       <div *ngFor="let lang of language">
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="language" formControlName="language"  value="{{lang}}">
-          <label class="form-check-label">{{lang}}</label>
+          <input class="form-check-input"  value="{{lang.id}}" type="checkbox"  (change)="onCheckboxChangeLanguage($event,lang)"   name="language"    formControlName="language"  >
+          <label class="form-check-label">{{lang.name}}</label>
         </div>
       </div>
     </div>
@@ -88,22 +90,11 @@
       <label><h3>Technology</h3></label>
       <div *ngFor="let tech of technology">
         <div class="form-check form-check-inline">
-          <label>
           <input class="form-check-input" value="{{tech.id}}" type="checkbox" (change)="onCheckboxChange($event,tech)" name="technology"  formControlName="technology" >
-          {{tech.name}}</label>
+          <label>{{tech.name}}</label>
         </div>
       </div>
     </div>
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -111,8 +102,8 @@
       <label><h3>Market</h3></label>
       <div *ngFor="let mar of market">
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="market" formControlName="market"  value="{{mar}}">
-          <label class="form-check-label">{{mar}}</label>
+          <input class="form-check-input"   value="{{mar.id}}" type="checkbox"  (change)="onCheckboxChangeMarket($event,mar)"   name="market" formControlName="market" >
+          <label class="form-check-label">{{mar.name}}</label>
         </div>
       </div>
     </div>

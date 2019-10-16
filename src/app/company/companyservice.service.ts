@@ -4,6 +4,10 @@ import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Company} from './company';
 import {Technology} from '../technology/technology';
+import {Language} from './Language';
+import {Specialize} from './Specialize';
+import {Market} from './Market';
+import {Relationship} from './Relationship';
 
 const httpOption = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -13,10 +17,18 @@ const httpOption = {
   providedIn: 'root'
 })
 export class CompanyserviceService {
-  private logoUrlApi = 'http://localhost:8080/companyImg/';
+  private logoUrlApi = 'http://localhost:8080/companyLogo';
   private companyUrl = 'http://localhost:8080/company';
   private activeUrl = 'http://localhost:8080/changeActive';
+  private languageUrl = 'http://localhost:8080/getAllLanguage';
+  private marketUrl = 'http://localhost:8080/getAllMarket';
+  private relationshipUrl = 'http://localhost:8080/getAllRelationship';
+  private specializeUrl = 'http://localhost:8080/getAllSpecialize';
 
+  getLanguage = 'http://localhost:8080/Language';
+  private getRelationship = 'http://localhost:8080/Relationship';
+  private getMarket = 'http://localhost:8080/Market';
+  private getSpecialize = 'http://localhost:8080/Specialize';
   constructor(private http: HttpClient) {
   }
 
@@ -30,6 +42,19 @@ export class CompanyserviceService {
     return this.http.get<Company[]>(this.companyUrl);
   }
 
+  getAllLanguage(): Observable<Language[]> {
+    return this.http.get<Language[]>(this.languageUrl);
+  }
+  getAllMarket(): Observable<Market[]> {
+    return this.http.get<Market[]>(this.marketUrl);
+  }
+  getAllSpecialize(): Observable<Specialize[]> {
+    return this.http.get<Specialize[]>(this.specializeUrl);
+  }
+  getAllRelationship(): Observable<Relationship[]> {
+    return this.http.get<Relationship[]>(this.relationshipUrl);
+  }
+
   createCompany(formdata): Observable<Company> {
     return this.http.post<Company>(this.companyUrl, formdata);
   }
@@ -38,12 +63,22 @@ export class CompanyserviceService {
     return this.http.get<Company>(this.companyUrl + '/' + id);
   }
 
-  findBycompanyName(companyName: string): Observable<Company> {
-    return this.http.get<Company>(this.companyUrl + '/' + companyName);
+  getLanguageById(id: number): Observable<Language> {
+    return this.http.get<Language>(this.getLanguage + '/' + id);
   }
 
-  createLogo(companyName: string, formdata): Observable<HttpEvent<any>> {
-    return this.http.post<any>(this.logoUrlApi + companyName, formdata, {reportProgress: true, observe: 'events'}).pipe(
+  getRelationshipById(id: number): Observable<Relationship> {
+    return this.http.get<Relationship>(this.getRelationship + '/' + id);
+  }
+  getMarketById(id: number): Observable<Market> {
+    return this.http.get<Market>(this.getMarket + '/' + id);
+  }
+  getSpecializeById(id: number): Observable<Specialize> {
+    return this.http.get<Specialize>(this.getSpecialize + '/' + id);
+  }
+
+  createLogo(id: number, formdata): Observable<HttpEvent<any>> {
+    return this.http.put<any>(this.logoUrlApi + '/' + id, formdata, httpOption).pipe(
       catchError(this.handleError)
     );
   }
