@@ -12,7 +12,6 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthGuardServiceService} from './auth/auth-guard-service.service';
 import {AuthGuard1ServiceService} from './auth/auth-guard1-service.service';
-import {ManagerComponent} from './manager/manager.component';
 import {UserServiceService} from './user/user-service.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -23,7 +22,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginComponent,
     RegisterComponent,
     UserComponent,
-    ManagerComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +35,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   providers: [httpInterceptorProviders, AuthGuardServiceService, AuthGuard1ServiceService, UserServiceService],
   exports: [
-    ManagerComponent
   ],
   bootstrap: [AppComponent]
 })

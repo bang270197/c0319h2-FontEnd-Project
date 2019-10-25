@@ -6,14 +6,14 @@ import {EditComponent} from './edit/edit.component';
 import {RouterModule, Routes} from '@angular/router';
 import {ViewComponent} from './view/view.component';
 import {AuthGuardServiceService} from '../auth/auth-guard-service.service';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DeleteComponent } from './delete/delete.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 
 const routes: Routes = [
-  {path: 'list', component: ListComponent, canActivate: [AuthGuardServiceService]},
+  {path: 'list', component: ListComponent},
   {path: 'edit/:id', component: EditComponent, canActivate: [AuthGuardServiceService]},
   {path: 'view/:id', component: ViewComponent, canActivate: [AuthGuardServiceService]},
   {path: 'add', component: AddComponent, canActivate: [AuthGuardServiceService]},
@@ -27,7 +27,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    FormsModule
   ]
 })
 export class CompanyModule {

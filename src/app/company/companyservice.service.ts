@@ -17,8 +17,8 @@ const httpOption = {
   providedIn: 'root'
 })
 export class CompanyserviceService {
-  private logoUrlApi = 'http://localhost:8080/companyLogo';
-  private companyUrl = 'http://localhost:8080/company';
+   logoUrlApi = 'http://localhost:8080/addLogo';
+  companyUrl = 'http://localhost:8080/company/';
   private activeUrl = 'http://localhost:8080/changeActive';
   private languageUrl = 'http://localhost:8080/getAllLanguage';
   private marketUrl = 'http://localhost:8080/getAllMarket';
@@ -29,6 +29,9 @@ export class CompanyserviceService {
   private getRelationship = 'http://localhost:8080/Relationship';
   private getMarket = 'http://localhost:8080/Market';
   private getSpecialize = 'http://localhost:8080/Specialize';
+
+
+
   constructor(private http: HttpClient) {
   }
 
@@ -45,12 +48,15 @@ export class CompanyserviceService {
   getAllLanguage(): Observable<Language[]> {
     return this.http.get<Language[]>(this.languageUrl);
   }
+
   getAllMarket(): Observable<Market[]> {
     return this.http.get<Market[]>(this.marketUrl);
   }
+
   getAllSpecialize(): Observable<Specialize[]> {
     return this.http.get<Specialize[]>(this.specializeUrl);
   }
+
   getAllRelationship(): Observable<Relationship[]> {
     return this.http.get<Relationship[]>(this.relationshipUrl);
   }
@@ -59,8 +65,15 @@ export class CompanyserviceService {
     return this.http.post<Company>(this.companyUrl, formdata);
   }
 
+
   getCompanyByid(id: number): Observable<Company> {
-    return this.http.get<Company>(this.companyUrl + '/' + id);
+    // debugger;
+    return this.http.get<Company>(this.companyUrl + id, httpOption);
+  }
+
+
+  editCompany(id: number, company: Company): Observable<any> {
+    return this.http.put(this.companyUrl + id, company, httpOption);
   }
 
   getLanguageById(id: number): Observable<Language> {
@@ -70,15 +83,17 @@ export class CompanyserviceService {
   getRelationshipById(id: number): Observable<Relationship> {
     return this.http.get<Relationship>(this.getRelationship + '/' + id);
   }
+
   getMarketById(id: number): Observable<Market> {
     return this.http.get<Market>(this.getMarket + '/' + id);
   }
+
   getSpecializeById(id: number): Observable<Specialize> {
     return this.http.get<Specialize>(this.getSpecialize + '/' + id);
   }
 
-  createLogo(id: number, formdata): Observable<HttpEvent<any>> {
-    return this.http.put<any>(this.logoUrlApi + '/' + id, formdata, httpOption).pipe(
+  addLogo(id: number, formdata): Observable<any> {
+    return this.http.post<any>(this.logoUrlApi + '/' + id , formdata,  {reportProgress: true, observe: 'events'}).pipe(
       catchError(this.handleError)
     );
   }

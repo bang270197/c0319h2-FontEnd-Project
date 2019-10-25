@@ -48,14 +48,15 @@ export class RegisterComponent implements OnInit {
 
     this.authService.signUp(this.signupInfo).subscribe(
       data => {
+        this.Successmessage = 'Đăng ký thành công!!';
+        this.loading = false;
         this.isSignedUp = true;
         this.isSignUpFailed = false;
-        this.Successmessage = 'Đăng ký thành công!!';
-        this.route.navigate(['/manager']);
-        this.loading = false;
       },
       error => {
         this.loading = true;
+        this.isSignUpFailed = true;
+        this.isSignedUp = false;
         this.errorMessage = 'Đăng ký thất bại, user hoặc email đã tồn lại';
         this.isSignUpFailed = true;
       }

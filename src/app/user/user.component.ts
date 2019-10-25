@@ -20,11 +20,13 @@ export class UserComponent implements OnInit {
   file: any;
   formUser: FormGroup;
   messageImg;
-  message;
+  messageSuccess;
+  messageFail;
   formData = new FormData();
   loading = false;
   imageFileName = '';
-
+  isSuccessMessage = false;
+  isFailMessage = false;
   // urlImgServe = 'E:\\BaitapProjectCuoiKhoa\\C0319H2-Project-Backend\\src\\main\\resources\\imageUser\\';
   constructor(private token: TokenStorageService,
               private userService: UserServiceService,
@@ -72,23 +74,26 @@ export class UserComponent implements OnInit {
       this.userService.updateAvatar(this.formData).subscribe(() => {
           this.getUserNameByName();
           this.loading = false;
-          this.messageImg = 'Avatar uploaded successfully!';
+          // this.messageImg = 'Uploaded successfully!';
+        this.messageSuccess = 'Uploaded successfully!!';
         }, error1 => {
-          this.messageImg = 'Failed to upload avatar!!. Cause: ' + error1.message;
+          this.messageFail = 'Failed to upload avatar!!. Cause: ' + error1.message;
         }
       );
     }
-    // this.formData.append('user', new Blob([JSON.stringify(this.formUser.value)], {type: 'application/json'}));
-    // this.formData.append('username', this.user.username);
     this.loading = false;
     this.userService.editUser(this.user.username, this.formUser.value).subscribe(
       data => {
-        this.message = 'User uploaded successfully!!';
+        this.isSuccessMessage = true;
+        this.isFailMessage = false;
+        this.messageSuccess = 'Uploaded successfully!!';
         this.loading = false;
       },
       error => {
         this.loading = true;
-        this.message = 'Failed to upload user!!';
+        this.isSuccessMessage = false;
+        this.isFailMessage = true;
+        this.messageFail = 'Failed to upload user!!';
         this.userService.handleError(error);
       }
     );
@@ -100,7 +105,5 @@ export class UserComponent implements OnInit {
     window.location.reload();
   }
 
-  reload() {
-    window.location.reload();
-  }
+
 }

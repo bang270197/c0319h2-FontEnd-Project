@@ -5,7 +5,6 @@ import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {AuthGuardServiceService} from './auth/auth-guard-service.service';
 import {AuthGuard1ServiceService} from './auth/auth-guard1-service.service';
-import {ManagerComponent} from './manager/manager.component';
 import {UserComponent} from './user/user.component';
 
 const routes: Routes = [
@@ -18,11 +17,6 @@ const routes: Routes = [
     component: UserComponent,
     canActivate: [AuthGuard1ServiceService]
 
-  },
-  {
-    path: 'manager',
-    component: ManagerComponent,
-    canActivate: [AuthGuardServiceService]
   },
   {
     path: 'signup',
@@ -39,6 +33,9 @@ const routes: Routes = [
   },
   {
     path: 'technology', loadChildren: './technology/technology.module#TechnologyModule'
+  },
+  {
+    path: 'tags', loadChildren: './tags/tags.module#TagsModule'
   }
 ];
 

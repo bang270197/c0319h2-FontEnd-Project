@@ -1,1 +1,61 @@
-<p>view works!</p>
+
+
+
+
+
+<div class="container">
+  <div *ngIf="company">
+<div class="card text-center">
+  <div class="card-header">
+    <h3>Thông tin chi tiết công ty {{company.companyName}}</h3>
+  </div>
+  <div class="card-body">
+    <img style="float: left" width="300px" src='http://localhost:8080/logo/{{company.companylogo}}'>
+    <div class="row" style="padding-left: 20px">
+
+      <div><i class="fas fa-address-card" style="font-size: 30px"></i>{{company.shortname}}</div>
+      <div style=" margin-left: 420px"><i class="fas fa-map-marker-alt" style="font-size: 30px"></i>{{company.address}}</div>
+
+    </div>
+   <div class="row" style="margin-top: 30px; padding-left: 20px">
+     <div><i class="fab fa-internet-explorer" style="font-size: 30px"></i>{{company.website}}</div>
+     <div style=" margin-left: 420px"><i style="font-size: 30px" class="fas fa-mobile-alt"></i>{{company.phonenumber}}</div>
+   </div>
+
+    <div  class="row" style="margin-top: 30px; padding-left: 20px">
+      <div><i class="fas fa-envelope-square" style="font-size: 30px"></i>{{company.email}}</div>
+      <div style=" margin-left: 420px"><i class="fas fa-paste" style="font-size: 30px"></i>{{company.relationship.name}}</div>
+    </div>
+
+    <div class="row" style="margin-top: 80px">
+     <h5>Information introduction:</h5>  <p>{{company.introductoryinformation}}</p>
+    </div>
+    <div class="row" style="margin-top: 20px">
+        <h5>Technology:</h5>
+        <div *ngFor="let tech of company.technology">
+          <button style="margin-left: 5px" type="button" class="btn btn-outline-warning">{{tech.name}}</button>
+        </div>
+      <h5 style="margin-left: 150px">Language:</h5><br>
+      <div *ngFor="let lang of company.language">
+        <button style="margin-left: 5px" type="button" class="btn btn-outline-secondary">{{lang.name}}</button>
+      </div>
+  </div>
+
+
+    <div class="row" style="margin-top: 20px">
+      <h5>Market:</h5>
+      <div *ngFor="let mar of company.market">
+        <button style="margin-left: 5px" type="button" class="btn btn-outline-primary">{{mar.name}}</button>
+      </div>
+      <h5 style="margin-left: 250px">Specialize:</h5><br>
+      <div *ngFor="let spec of company.specialize">
+        <button style="margin-left: 5px" type="button" class="btn btn-outline-secondary">{{spec.name}}</button>
+      </div>
+    </div>
+
+  <div class="card-footer text-muted">
+    <button type="button" class="btn btn-primary" routerLink="/company/list"><i class="fas fa-sign-out-alt" style="font-size: 20px"></i>Quay về</button>
+  </div>
+</div>
+</div>
+</div>

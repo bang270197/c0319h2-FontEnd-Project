@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
+  successMessage = '';
   roles: string[] = [];
   private loginInfo: LoginInfo;
   formLogin: FormGroup;
@@ -49,13 +50,13 @@ export class LoginComponent implements OnInit {
           this.tokenStorage.saveUsername(data.username);
           this.tokenStorage.saveAuthorities(data.authorities);
 
-          this.isLoginFailed = false;
-          this.isLoggedIn = true;
+          // this.successMessage = '';
+          this.isLoginFailed = true;
           this.roles = this.tokenStorage.getAuthorities();
           this.loading = false;
           this.roles.every(role => {
             if (role === 'ROLE_ADMIN') {
-              this.route.navigate(['/manager']);
+              this.route.navigate(['/company/list']);
             } else if (role === 'ROLE_USER') {
               this.route.navigate(['/user/' + this.tokenStorage.getUsername()]);
             }
@@ -63,9 +64,8 @@ export class LoginComponent implements OnInit {
         },
         error => {
           this.loading = true;
-          console.log(error);
-          this.errorMessage = 'Dang nhap that bai!!!';
-          this.isLoginFailed = true;
+          this.errorMessage = 'Tai khoan mat khau khong dung!!!';
+          this.isLoginFailed = false;
         }
       );
     }

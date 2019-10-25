@@ -1,20 +1,22 @@
-<nav class="navbar navbar-dark bg-primary">
-  <a class="navbar-brand">Navbar</a>
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand"><img src="../../../assets/anhnen/a56.png" width="250px" height="50px"></a>
   <div *ngIf="info.token">
-    Xin Chào:<b>{{info.username}}</b>
-    Với Quyền:<b>{{info.authorities}}</b>
-
-    <button class="btn badge-secondary my-2 my-sm-0" (click)="logout()" type="submit">Đăng xuất</button>
+    <i class="fas fa-user-circle" style="font-size: 18px"></i><b>{{info.username}}</b>
+    <button  style="margin-left: 50px" class="btn badge-secondary my-2 my-sm-0" (click)="logout()" type="submit"><i class="fas fa-sign-out-alt" style="font-size: 20px"></i>Đăng xuất</button>
   </div>
 </nav>
 <!--enctype="multipart/form-data"-->
 <div *ngIf="user" id="formedituser">
   <h1>Form Edit User</h1>
-  <div *ngIf="message">
-    <span style="color: red">{{message}}</span>
+  <div *ngIf="isSuccessMessage">
+    <div class="alert alert-success" role="alert" style="margin-right: 100px">
+      {{messageSuccess}}
+    </div>
   </div>
-  <div *ngIf="messageImg">
-    <span style="color: red">{{messageImg}}</span>
+  <div *ngIf="isFailMessage">
+    <div class="alert alert-danger" role="alert">
+      {{messageFail}}
+    </div>
   </div>
   <form [formGroup]="formUser"  (ngSubmit)="onSubmit()" enctype="multipart/form-data">
     <div class="form-group">
@@ -34,7 +36,6 @@
     </div>
 
 
-
     <div class="form-group">
       <label>PhoneNumber</label>
       <input type="text" class="form-control col-7" name="phonenumber" [(ngModel)]="user.phonenumber" formControlName="phonenumber">
@@ -46,27 +47,22 @@
       <span style="color: red">Không được để trống!!</span>
     </div>
 
-<!--    <img src='E:/BaitapProjectCuoiKhoa/C0319H2-Project-Backend/src/main/resources/imageUser/{{user.avatar}}'>-->
     <div class="form-group">
       <label>Avatar</label><br/>
-
-      <img width="250px" src='http://localhost:8080/images/{{user.avatar}}'><br/>
+       <div *ngIf="user.avatar">
+         <img width="250px" src='http://localhost:8080/user/{{user.avatar}}'><br/>
+       </div>
       <input type="file"  id="avatar" (change)="selectFile($event)">
     </div>
-<!--    -->
 
-<!--    <div class="form-group">-->
-<!--      <label for="avatar">Avatar</label>-->
-<!--      <input type="file" accept="image/*" id="avatar" (change)="onFileChange($event)" >-->
-<!--    </div>-->
-<!--    -->
 
     <div class="form-group">
-   <button class="btn btn-dark" type="submit" id="submit">
+   <button class="btn btn-dark" type="submit" id="submit" [disabled]="!formUser.valid">
      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
      EditUser</button>
     </div>
   </form>
+  <a routerLink="/company/list">Về trang Quản lý</a>
 </div>
 
 

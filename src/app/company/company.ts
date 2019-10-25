@@ -71,7 +71,7 @@ export class Company {
     this.active = true;
   }
 
-  ChanActive(active: boolean) {
-    this.active = active;
-  }
+
+
+
 }
