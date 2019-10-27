@@ -9,6 +9,8 @@ import {Specialize} from '../Specialize';
 import {Market} from '../Market';
 import {Technology} from '../../technology/technology';
 import {TechnologyServiceService} from '../../technology/technology-service.service';
+import {Tags} from '../../tags/Tags';
+import {TagsService} from '../../tags/tags.service';
 
 
 @Component({
@@ -24,12 +26,14 @@ export class EditComponent implements OnInit {
   // khoi tao doi tuong de sua
   editCompany: Company;
   // luu doi tuong
+  tags: Tags[];
   relationship: Relationship;
   specialize: Specialize[];
   language: Language[];
   market: Market[];
   technology: Technology[];
   // luu id doi tuong
+  tagsId: number[] = [];
   languageId: number[] = [];
   specializeId: number[] = [];
   marketId: number[] = [];
@@ -37,6 +41,7 @@ export class EditComponent implements OnInit {
 
   formCompany: FormGroup;
   // hien thi du kieu
+  Arraytags: Tags[];
   Arrayrelationship: Relationship[];
   Arraylanguage: Language[];
   Arrayspecialize: Specialize[];
@@ -55,7 +60,8 @@ export class EditComponent implements OnInit {
   constructor(private active: ActivatedRoute,
               private companyService: CompanyserviceService,
               private fb: FormBuilder,
-              private technologyService: TechnologyServiceService
+              private technologyService: TechnologyServiceService,
+              private tagServie: TagsService
   ) {
   }
 
@@ -75,6 +81,7 @@ export class EditComponent implements OnInit {
       technology: [''],
       market: [''],
       note: [''],
+      tags: ['']
     });
     this.getCompanyById();
     this.getAllRelationship();
@@ -82,14 +89,19 @@ export class EditComponent implements OnInit {
     this.getAllSpecialize();
     this.getAllTechnology();
     this.getAllMarket();
+    this.getAllTags();
   }
 
   getCompanyById(): void {
-    debugger;
     const id = +this.active.snapshot.paramMap.get('id');
     this.companyService.getCompanyByid(id).subscribe(company => this.company = company);
   }
 
+  getAllTags() {
+    this.tagServie.getAllTags().subscribe(list => {
+      this.Arraytags = list;
+    });
+  }
 
   getAllRelationship() {
     this.companyService.getAllRelationship().subscribe(list => {
@@ -189,6 +201,22 @@ export class EditComponent implements OnInit {
     }
   }
 
+  onCheckboxChangeTag(event, t: Tags) {
+    this.tags = this.company.tags;
+    if (event.target.checked) {
+      if (this.travetruefalseTag(t) === false) {
+        this.tags.push(t);
+      }
+    } else {
+      for (let x = 0; x < this.tags.length; x++) {
+        if (t.name === this.tags[x].name) {
+          this.tags.splice(x, 1);
+        }
+      }
+    }
+  }
+
+
   selectFile(event: any) {
     if (event.target.files.length > 0) {
       this.file = event.target.files[0];
@@ -213,6 +241,10 @@ export class EditComponent implements OnInit {
     if (this.technology == null) {
       this.technology = this.company.technology;
     }
+
+    if (this.tags == null) {
+      this.tags = this.company.tags;
+    }
     this.editCompany = new Company(
       this.formCompany.get('companyName').value,
       this.formCompany.get('shortname').value,
@@ -226,10 +258,12 @@ export class EditComponent implements OnInit {
       this.language,
       this.technology,
       this.market,
-      this.formCompany.get('note').value
+      this.formCompany.get('note').value,
+      this.tags
     );
 
     this.companyService.editCompany(this.company.id, this.editCompany).subscribe(newCompany => {
+
       this.newCompany = newCompany;
       if (this.file != null) {
         this.formData.append('companylogo', this.file);
@@ -254,6 +288,7 @@ export class EditComponent implements OnInit {
 
   // hàm so sánh đối tượng có tồn tại trong mảng
   travetruefalseLang(lang: Language): boolean {
+
     for (let i = 0; i < this.company.language.length; i++) {
       if (lang.name === this.company.language[i].name) {
         return true;
@@ -296,6 +331,15 @@ export class EditComponent implements OnInit {
   }
 
 
+  travetruefalseTag(t: Tags): boolean {
+    for (let i = 0; i < this.company.tags.length; i++) {
+      if (t.name === this.company.tags[i].name) {
+        return true;
+        break;
+      }
+    }
+    return false;
+  }
   // hàm so sánh hiển thị checked
   sosanhLang(lang: Language): boolean {
     for (let i = 0; i < this.company.language.length; i++) {
@@ -343,4 +387,13 @@ export class EditComponent implements OnInit {
 
   }
 
+
+  sosanhTag(t: Tags): boolean {
+    for (let i = 0; i < this.company.tags.length; i++) {
+      if (t.name === this.company.tags[i].name) {
+        return true;
+        break;
+      }
+    }
+  }
 }

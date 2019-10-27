@@ -3,13 +3,15 @@ import {CompanyserviceService} from '../companyservice.service';
 import {Company} from '../company';
 import {TokenStorageService} from '../../auth/token-storage.service';
 import {Router} from '@angular/router';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Technology} from '../../technology/technology';
 import {Language} from '../Language';
 import {Market} from '../Market';
 import {Specialize} from '../Specialize';
 import {Relationship} from '../Relationship';
 import {TechnologyServiceService} from '../../technology/technology-service.service';
+import {Tags} from '../../tags/Tags';
+import {TagsService} from '../../tags/tags.service';
 
 
 @Component({
@@ -18,6 +20,9 @@ import {TechnologyServiceService} from '../../technology/technology-service.serv
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
+
+
+
   listCompany: Company[];
   company: Company;
   message;
@@ -35,32 +40,41 @@ export class ListComponent implements OnInit {
   messageAddSuccess;
   messageError;
   // hien thi du lieu
+  tag: Tags[];
   technology: Technology[];
   language: Language[];
   market: Market[];
   specialize: Specialize[];
   relationship: Relationship[];
   // lai id
+  ArrayTag: number[] = [];
   ArrayTechnology: number[] = [];
   ArrayLanguage: number[] = [];
   ArrayMarket: number[] = [];
   ArraySpecialize: number[] = [];
   newRelationship: Relationship;
   // ddng mang cac doi tuong checkbox
+  newTag: Tags[];
   newTechnology: Technology[] = [];
   newLanguage: Language[] = [];
   newSpecialize: Specialize[] = [];
   newMarket: Market[] = [];
   file: any;
+  ArrayFile: string[] = [];
+  imgName: string[] = [];
   imageLogo = '';
   formData = new FormData();
-  // id: number;
 
+  idDelete: number;
+
+
+   formData1 = new FormData();
   ////////////////////////////// Form Them ////////////////////////////////
   constructor(private companyService: CompanyserviceService, private token: TokenStorageService,
               private route: Router,
               private fb: FormBuilder,
-              private technologyService: TechnologyServiceService
+              private technologyService: TechnologyServiceService,
+              private tagService: TagsService
   ) {
   }
 
@@ -77,9 +91,10 @@ export class ListComponent implements OnInit {
     this.getAllMarket();
     this.getAllRelationship();
     this.getAllSpecialize();
+    this.getAllTag();
     this.formCompany = this.fb.group({
-      companyName: [''],
-      shortname: [''],
+      companyName: ['' ],
+      shortname: ['' ],
       address: [''],
       website: [''],
       phonenumber: [''],
@@ -90,7 +105,8 @@ export class ListComponent implements OnInit {
       language: [''],
       technology: [''],
       market: [''],
-      note: ['']
+      note: [''],
+      tag: ['']
     });
   }
 
@@ -98,6 +114,12 @@ export class ListComponent implements OnInit {
   getAllTechnology() {
     this.technologyService.getAllTechnology().subscribe(list => {
       this.technology = list;
+    });
+  }
+
+  getAllTag() {
+    this.tagService.getAllTags().subscribe(list => {
+      this.tag = list;
     });
   }
 
@@ -132,13 +154,25 @@ export class ListComponent implements OnInit {
       this.imageLogo = event.target.files[0].name;
     }
   }
+  selectArrayFile(event: any){
+    debugger;
+    for (var  i =0 ; i< event.target.files.length;i++ ){
+      this.ArrayFile.push(event.target.files[i]);
+    }
+  }
+  //
+  // uploadMultipart(){
+  // debugger;
+  //
+  //
+  //
+  // }
 
   onCheckboxChangeRelationship(rela) {
     this.newRelationship = rela;
   }
 
   onCheckboxChangeLanguage(event, lang: Language) {
-     debugger;
     if (event.target.checked) {
       this.ArrayLanguage.push(lang.id);
     } else {
@@ -200,6 +234,27 @@ export class ListComponent implements OnInit {
     }
   }
 
+  onCheckboxChangeTag(event, t: Tags) {
+    // debugger;
+    if (event.target.checked) {
+      this.ArrayTag.push(t.id);
+    } else {
+      for (let i = 0; i < this.tag.length; i++) {
+        if (this.ArrayTag[i] === t.id) {
+          this.ArrayTag.splice(i, 1);
+        }
+      }
+    }
+    this.newTag = [];
+    for (let j = 0; j < this.ArrayTag.length; j++) {
+      if (this.ArrayTag[j] != null) {
+        this.tagService.getTagById(this.ArrayTag[j]).subscribe(newTech => {
+          this.newTag.push(newTech);
+        });
+      }
+    }
+  }
+
   onCheckboxChangeSpecialize(event, spec: Specialize) {
     if (event.target.checked) {
       this.ArraySpecialize.push(spec.id);
@@ -246,25 +301,27 @@ export class ListComponent implements OnInit {
     });
   }
 
-  changeActive(id) {
-    this.companyService.getCompanyByid(id).subscribe(company => {
-      this.company = company;
-      // alert(JSON.stringify(this.company));
+  changeActive() {
 
-      this.companyService.changeActive(this.company.id).subscribe(() => {
+    if (this.idDelete != null) {
+      this.companyService.changeActive(this.idDelete).subscribe(() => {
         this.getAllCompany();
         // alert('Da thay doi active thanh cong');
       }, error => {
         this.companyService.handleError(error);
       });
-
-
-    }, error => {
-      this.companyService.handleError(error);
-    });
+    }
   }
 
+
+  getIdDelete(id: number) {
+
+    this.idDelete = id;
+  }
+
+
   onSubmit() {
+
     this.companyAdd = new Company(
       this.formCompany.get('companyName').value,
       this.formCompany.get('shortname').value,
@@ -278,11 +335,11 @@ export class ListComponent implements OnInit {
       this.newLanguage,
       this.newTechnology,
       this.newMarket,
-      this.formCompany.get('note').value
+      this.formCompany.get('note').value,
+      this.newTag
     );
 
     this.companyService.createCompany(this.companyAdd).subscribe(newComapny => {
-      // debugger;
       this.newCompany = newComapny;
 
       if (this.file != null) {
@@ -294,6 +351,39 @@ export class ListComponent implements OnInit {
           this.messageError = 'Them anh That bai';
         });
       }
+
+
+    debugger;
+      if (this.ArrayFile != null) {
+
+          for (var i = 0; i < this.ArrayFile.length; i++) {
+            this.formData1.append('companyavatar', this.ArrayFile[i]);
+          }
+
+        // this.formData1.append('companyavatar', this.ArrayFile);
+        this.companyService.addImg(this.newCompany.id, this.formData1).subscribe(() => {
+          this.getAllCompany();
+          // this.messageAddSuccess = 'Them anh thanh cong';
+        }, error => {
+          this.messageError = 'Them anh That bai';
+        });
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       this.getAllCompany();
       this.messageAddSuccess = 'Thêm công ty thành công!!';
 
@@ -302,12 +392,13 @@ export class ListComponent implements OnInit {
       this.companyService.handleError(error);
     });
   }
-  search(){
-    if (this.companyName !== ''){
+
+  search() {
+    if (this.companyName !== '') {
       this.listCompany = this.listCompany.filter(res => {
-           return res.companyName.toLocaleLowerCase().match(this.companyName.toLocaleLowerCase());
-      })
-    }else if (this.companyName === ''){
+        return res.companyName.toLocaleLowerCase().match(this.companyName.toLocaleLowerCase());
+      });
+    } else if (this.companyName === '') {
       this.getAllCompany();
     }
   }

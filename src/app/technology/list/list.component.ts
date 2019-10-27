@@ -31,6 +31,8 @@ export class ListComponent implements OnInit {
   messageDeleteTrue = true;
   messageDeleteFalse = true;
   messageDelete;
+
+  idDelete;
   constructor(private fb: FormBuilder, private technologyService: TechnologyServiceService, private token: TokenStorageService,
               private route: Router
               ) {
@@ -109,5 +111,21 @@ export class ListComponent implements OnInit {
       this.messageEditTrue = true;
       this.messageEditFalse = false;
     });
+  }
+  getIdDelete(id: number){
+    this.idDelete = id;
+  }
+
+
+  deleteById() {
+
+    if (this.idDelete != null) {
+      this.technologyService.deleteTechnology(this.idDelete).subscribe(() => {
+        this.getAllTechnology();
+
+      }, error => {
+        this.technologyService.handleError(error);
+      });
+    }
   }
 }

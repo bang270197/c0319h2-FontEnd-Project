@@ -30,7 +30,7 @@ export class CompanyserviceService {
   private getMarket = 'http://localhost:8080/Market';
   private getSpecialize = 'http://localhost:8080/Specialize';
 
-
+  imgUrl = 'http://localhost:8080/mutilpartFile';
 
   constructor(private http: HttpClient) {
   }
@@ -94,6 +94,13 @@ export class CompanyserviceService {
 
   addLogo(id: number, formdata): Observable<any> {
     return this.http.post<any>(this.logoUrlApi + '/' + id , formdata,  {reportProgress: true, observe: 'events'}).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  addImg(id: number, formdata): Observable<any> {
+    debugger;
+    return this.http.post<any>(this.imgUrl + '/' + id , formdata,{reportProgress: true, observe: 'events'}).pipe(
       catchError(this.handleError)
     );
   }

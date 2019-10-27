@@ -162,13 +162,22 @@
             </div>
           </div>
         </div>
+
+
         <div class="col">
-          <label><h3>Logo</h3></label><br/>
-          <div *ngIf="company.companylogo">
-            <img width="80px" src='http://localhost:8080/logo/{{company.companylogo}}'>
+          <label><h3>Tag</h3></label>
+          <div *ngFor="let t of Arraytags">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" value="{{t.id}}"
+                     [checked]="sosanhTag(t)" type="checkbox" name="tags"
+                     formControlName="tags"
+                     (change)="onCheckboxChangeTag($event,t)"
+              >
+              <label>{{t.name}}</label>
+            </div>
           </div>
-          <input type="file" id="companyName" (change)="selectFile($event)">
         </div>
+
 
       </div>
       <!-- -----------------------------------    Market--------------------------------->
@@ -181,10 +190,14 @@
         </div>
       </div>
 
-
-      <div class="form-row">
-
+      <div class="col">
+        <label><h3>Logo</h3></label><br/>
+        <div *ngIf="company.companylogo">
+          <img width="80px" src='http://localhost:8080/logo/{{company.companylogo}}'>
+        </div>
+        <input type="file" id="companyName" (change)="selectFile($event)">
       </div>
+
 
 
       <div [hidden]="showMessageTrue">

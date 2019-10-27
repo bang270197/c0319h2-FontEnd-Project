@@ -34,10 +34,15 @@
       <th scope="row">{{i +1}}</th>
       <td>{{tech.name}}</td>
       <td><button type="button" class="btn btn-primary" (click)="editId(tech.id)" data-toggle="modal" data-target="#exampleModalCenter">
-        Edit
+        <i class="fas fa-user-edit"
+           style="font-size: 20px"></i>Edit
       </button></td>
-      <td><button type="button" class="btn btn-danger" (click)="deleteId(tech.id)"  >Xoa</button></td>
-      <td><button type="button" class="btn btn-light">View</button></td>
+      <td>    <button type="button" class="btn btn-dark" (click)="getIdDelete(tech.id)" data-toggle="modal" data-target="#exampleModalMessageDelete">
+        <i class="fas fa-trash-alt"
+           style="font-size: 20px"></i>Delete
+      </button></td>
+      <td><button type="button" class="btn btn-light"><i class="fas fa-calendar-week"
+                                                         style="font-size: 20px"></i>View</button></td>
     </tr>
     </tbody>
   </table>
@@ -175,59 +180,33 @@
 
 
 
-<!--&lt;!&ndash;Form Xoa&ndash;&gt;-->
-<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter1">-->
-<!--  Launch demo modal-->
-<!--</button>-->
-
-<!--&lt;!&ndash; Modal &ndash;&gt;-->
-<!--<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">-->
-<!--  <div class="modal-dialog modal-dialog-centered" role="document">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="modal-header">-->
-<!--        <h5 class="modal-title" id="exampleModalCenterTitle1">Modal title</h5>-->
-<!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--          <span aria-hidden="true">&times;</span>-->
-<!--        </button>-->
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        ...-->
-<!--      </div>-->
-<!--      <div class="modal-footer">-->
-<!--        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--        <button type="button" class="btn btn-primary">Save changes</button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
 
 
 
 
-
-
+<!-- form message Thong bao-->
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
+
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalMessageDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelMessageDelete" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabelMessageDelete">Thông báo !</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <h4>Bạn có chắc chắn muốn xóa ?</h4>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" (click)="deleteById()" data-dismiss="modal" class="btn btn-primary">Xoa</button>
       </div>
     </div>
   </div>
 </div>
+
+

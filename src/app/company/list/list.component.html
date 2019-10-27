@@ -33,6 +33,7 @@
     <th scope="col">Số điện thoại</th>
     <th scope="col">Email</th>
     <th scope="col">Logo công ty</th>
+    <th scope="col">ArrayAvatar công ty</th>
     <th scope="col">Sửa thông tin</th>
     <th scope="col">Xóa công ty</th>
     <th scope="col">Chi tiết công ty</th>
@@ -47,9 +48,12 @@
     <td>{{com.website}}</td>
     <td>{{com.phonenumber}}</td>
     <td>{{com.email}}</td>
-<!--    <span *ngIf="com.companylogo">-->
+    <span *ngIf="com.companylogo">
       <td><img  width="80px" src='http://localhost:8080/logo/{{com.companylogo}}'></td>
-<!--    </span>-->
+    </span>
+    <span *ngIf="com.companyavatar">
+      <td>{{com.companyavatar}}</td>
+    </span>
     <td>
       <div [hidden]="showAndHide">
         <button type="submit" class="btn btn-primary" routerLink="/company/edit/{{com.id}}"><i class="fas fa-user-edit"
@@ -59,9 +63,10 @@
     </td>
     <td>
       <div [hidden]="showAndHide">
-      <button type="submit" class="btn btn-danger" (click)="changeActive(com.id)"><i class="fas fa-trash-alt"
-                                                                                     style="font-size: 20px"></i>Xoa
-      </button>
+        <button type="button" class="btn btn-dark" (click)="getIdDelete(com.id)" data-toggle="modal" data-target="#exampleModalMessageDelete">
+          <i class="fas fa-trash-alt"
+             style="font-size: 20px"></i>Delete
+        </button>
       </div>
     </td>
     <td>
@@ -81,7 +86,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Thêm thông tin công ty</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -90,16 +95,19 @@
         <form [formGroup]="formCompany" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
 
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6" style="float: left">
               <label><h3>Company Name</h3></label>
               <input type="text" class="form-control" placeholder="Enter companyName" formControlName="companyName">
             </div>
+
 
             <div class="form-group col-md-6">
               <label><h3>Short Name</h3></label>
               <input type="text" class="form-control" placeholder="Enter shortname" formControlName="shortname">
             </div>
           </div>
+
+
 
 
           <div class="form-row">
@@ -199,6 +207,19 @@
 
 
           <div class="form-group">
+            <label><h3>Tag</h3></label>
+            <div *ngFor="let t of tag">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" value="{{t.id}}" type="checkbox"
+                       (change)="onCheckboxChangeTag($event,t)" name="tag" formControlName="tag">
+                <label class="form-check-label">{{t.name}}</label>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="form-group">
             <label><h3>Note</h3></label>
             <textarea class="form-control" rows="5" cols="5" name="note" formControlName="note"></textarea>
           </div>
@@ -206,10 +227,14 @@
 
           <div class="form-group">
             <label>LogoCompany</label><br/>
-            <input type="file" id="avatar" multiple accept="image/*" (change)="selectFile($event)">
+            <input type="file" id="avatar"  accept="image/*" (change)="selectFile($event)">
           </div>
 
 
+          <div class="form-group">
+            <label>ArrayImg</label><br/>
+            <input type="file" id="img" multiple  accept="image/*" (change)="selectArrayFile($event)">
+          </div>
 
           <div *ngIf="messageAddSuccess">
             <div class="alert alert-success" role="alert">
@@ -242,8 +267,30 @@
 
 
 
+<!-- form message Thong bao-->
+<!-- Button trigger modal -->
 
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModalMessageDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelMessageDelete" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabelMessageDelete">Thông báo !</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4>Bạn có chắc chắn muốn xóa ?</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" (click)="changeActive()" data-dismiss="modal" class="btn btn-primary">Xoa</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
