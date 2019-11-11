@@ -32,6 +32,9 @@ export class CompanyserviceService {
 
   imgUrl = 'http://localhost:8080/mutilpartFile';
 
+  searchByCompanyNameAndRelationshipUrl = 'http://localhost:8080/searchCompany/';
+
+  searchByNameUrl = 'http://localhost:8080/searchCompanyByName?companyName=';
   constructor(private http: HttpClient) {
   }
 
@@ -99,18 +102,19 @@ export class CompanyserviceService {
   }
 
   addImg(id: number, formdata): Observable<any> {
-    debugger;
     return this.http.post<any>(this.imgUrl + '/' + id , formdata,{reportProgress: true, observe: 'events'}).pipe(
       catchError(this.handleError)
     );
   }
 
-  // updateAvatar(formData): Observable<HttpEvent<any>> {
-  //   return this.http.post<any>(this.editAvatarUrl, formData, {reportProgress: true, observe: 'events'}).pipe(
-  //     catchError(this.handleError)
-  //   );
-  // }
+  searchByCompanyNameandRelationship(id: number, companyName: string): Observable<Company[]>{
+    debugger;
+    return this.http.get<Company[]>(this.searchByCompanyNameAndRelationshipUrl + id + '?companyName=' +companyName);
+  }
 
+  searchByName(companyName: string): Observable<Company[]>{
+    return  this.http.get<Company[]>(this.searchByNameUrl + companyName );
+  }
 
   handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

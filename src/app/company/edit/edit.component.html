@@ -199,6 +199,17 @@
       </div>
 
 
+      <div class="rows">
+        <div class="form-group">
+          <label>ArrayImg</label><br/>
+          <div *ngFor="let avatar of company.companyavatar">
+            <img width="80px" src='http://localhost:8080/arrImg/{{avatar}}' >
+          </div>
+          <input type="file" id="img" multiple  accept="image/*" (change)="selectArrayFile($event)">
+        </div>
+      </div>
+
+
 
       <div [hidden]="showMessageTrue">
         <div class="alert alert-success" role="alert">

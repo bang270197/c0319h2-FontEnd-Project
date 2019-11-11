@@ -14,7 +14,8 @@ import {AuthGuardServiceService} from './auth/auth-guard-service.service';
 import {AuthGuard1ServiceService} from './auth/auth-guard1-service.service';
 import {UserServiceService} from './user/user-service.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {TrangchuModule} from './trangchu/trangchu.module';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    TrangchuModule,
+    NgxPaginationModule
 
   ],
   providers: [httpInterceptorProviders, AuthGuardServiceService, AuthGuard1ServiceService, UserServiceService],

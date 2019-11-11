@@ -12,6 +12,7 @@ import {Relationship} from '../Relationship';
 import {TechnologyServiceService} from '../../technology/technology-service.service';
 import {Tags} from '../../tags/Tags';
 import {TagsService} from '../../tags/tags.service';
+import {HttpEvent} from '@angular/common/http';
 
 
 @Component({
@@ -67,8 +68,19 @@ export class ListComponent implements OnInit {
 
   idDelete: number;
 
+  //form Search
+  searchRelationship: Relationship;
+  companyName1: string;
+  formDataSearch = new FormData();
+  searchMessage;
+   listCompa: Company[];
 
    formData1 = new FormData();
+
+  formSearch: FormGroup;
+  // p: any;
+  // $even: any;
+
   ////////////////////////////// Form Them ////////////////////////////////
   constructor(private companyService: CompanyserviceService, private token: TokenStorageService,
               private route: Router,
@@ -108,6 +120,12 @@ export class ListComponent implements OnInit {
       note: [''],
       tag: ['']
     });
+
+
+    this.formSearch = this.fb.group({
+      companyName: [''],
+      relationship: ['']
+    })
   }
 
 
@@ -154,19 +172,52 @@ export class ListComponent implements OnInit {
       this.imageLogo = event.target.files[0].name;
     }
   }
+
+
   selectArrayFile(event: any){
-    debugger;
+
     for (var  i =0 ; i< event.target.files.length;i++ ){
       this.ArrayFile.push(event.target.files[i]);
     }
   }
-  //
-  // uploadMultipart(){
-  // debugger;
-  //
-  //
-  //
-  // }
+
+
+  onCheckboxSearchRelationship(rela){
+    this.searchRelationship = rela;
+  }
+  onSearch(){
+
+    // lay ten
+   this.companyName1 = this.formSearch.get('companyName').value;
+debugger;
+   // if ( this.companyName1 === '' && this.searchRelationship){
+   //   this.getAllCompany();
+   // }
+   // if ( this.searchRelationship) {
+   //
+   // }
+   if (this.companyName1 !== '' && !this.searchRelationship) {
+
+     this.companyService.searchByName(this.companyName1).subscribe( list =>{
+       this.listCompany = list;
+     }, error => {
+       this.companyService.handleError(error)
+     })
+   }else {
+     this.companyService.searchByCompanyNameandRelationship(this.searchRelationship.id,this.companyName1).subscribe( list =>{
+       this.listCompany = list;
+       if (this.listCompany === null){
+         this.searchMessage = 'Không tìm thấy company với tên này!!';
+       }
+     }, error => {
+       this.searchMessage = 'Không tìm thấy company với tên này!!';
+       this.companyService.handleError(error);
+     })
+   }
+
+
+  }
+
 
   onCheckboxChangeRelationship(rela) {
     this.newRelationship = rela;
@@ -353,7 +404,7 @@ export class ListComponent implements OnInit {
       }
 
 
-    debugger;
+// luu mang img
       if (this.ArrayFile != null) {
 
           for (var i = 0; i < this.ArrayFile.length; i++) {
@@ -371,19 +422,6 @@ export class ListComponent implements OnInit {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
       this.getAllCompany();
       this.messageAddSuccess = 'Thêm công ty thành công!!';
 
@@ -393,13 +431,13 @@ export class ListComponent implements OnInit {
     });
   }
 
-  search() {
-    if (this.companyName !== '') {
-      this.listCompany = this.listCompany.filter(res => {
-        return res.companyName.toLocaleLowerCase().match(this.companyName.toLocaleLowerCase());
-      });
-    } else if (this.companyName === '') {
-      this.getAllCompany();
-    }
-  }
+  // search() {
+  //   if (this.companyName !== '') {
+  //     this.listCompany = this.listCompany.filter(res => {
+  //       return res.companyName.toLocaleLowerCase().match(this.companyName.toLocaleLowerCase());
+  //     });
+  //   } else if (this.companyName === '') {
+  //     this.getAllCompany();
+  //   }
+  // }
 }

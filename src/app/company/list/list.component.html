@@ -1,5 +1,5 @@
 <nav class="navbar navbar-light bg-light">
-  <a class="navbar-brand"><img src="../../../assets/anhnen/a56.png" width="250px" height="50px"></a>
+  <a routerLink="/trangchu" class="navbar-brand"><img src="../../../assets/anhnen/a56.png" width="250px" height="50px"></a>
   <form class="form-inline">
     <div *ngIf="info.token">
       <i class="fas fa-user-circle" style="font-size: 18px"></i><b>{{info.username}}</b>
@@ -10,7 +10,8 @@
   </form>
 </nav>
 <h1 style="text-align: center">Danh Sách Công Ty</h1>
-<span [hidden]="showAndHide">
+<div class="row">
+  <span [hidden]="showAndHide">
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
   <i class="fas fa-plus-square" style="font-size: 20px">Thêm công ty
   </i>
@@ -20,8 +21,39 @@
   <button type="button" class="btn btn-info" routerLink="/tags/list" style="margin-left: 10px; margin-right: 10px"><i class="fas fa-tasks" style="font-size: 20px"></i>Quản lý các Tag</button>
 
 </span>
+</div>
+
+
+
 <!--tim kiem-->
-<input [(ngModel)]="companyName" (input)="search()" class="form-control mr-sm-2 col-4" type="text" style="margin-top: 10px;margin-bottom: 20px; float: right" placeholder="Nhập tên công ty cần tìm kiếm" aria-label="Search">
+<!--<input [(ngModel)]="companyName" (input)="search()" class="form-control mr-sm-2 col-4" type="text" style="margin-top: 10px;margin-bottom: 20px; float: right" placeholder="Nhập tên công ty cần tìm kiếm" aria-label="Search">-->
+<div [formGroup]="formSearch" >
+  <div style="margin-left: 10px;margin-bottom: 10px; margin-top: 10px" class="form-row">
+    <div  class="form-group col-md-4" style="float: left">
+      <input style="float: left" type="text" class="form-control" placeholder="Enter companyName" formControlName="companyName">
+    </div>
+  </div>
+
+    <div class="form-row">
+      <label><h5>Relationship</h5></label>
+      <div *ngFor="let rela of relationship">
+        <div class="form-check">
+          <input class="form-check-input" (change)="onCheckboxSearchRelationship(rela)" type="radio"
+                 name="relationship" formControlName="relationship" value="{{rela.id}}">
+          <label class="form-check-label">
+            {{rela.name}}
+          </label>
+        </div>
+      </div>
+    </div>
+  <button (click)="onSearch()" type="submit" class="btn btn-outline-primary">
+    Tìm kiếm
+  </button>
+  </div>
+<div *ngIf="searchMessage">
+  <span style="color: #ff1325">{{searchMessage}}</span>
+</div>
+
 <table class="table table-bordered">
   <thead>
   <tr>
@@ -33,14 +65,15 @@
     <th scope="col">Số điện thoại</th>
     <th scope="col">Email</th>
     <th scope="col">Logo công ty</th>
-    <th scope="col">ArrayAvatar công ty</th>
+    <div [hidden]="showAndHide">
     <th scope="col">Sửa thông tin</th>
     <th scope="col">Xóa công ty</th>
+    </div>
     <th scope="col">Chi tiết công ty</th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let com of listCompany">
+  <tr *ngFor="let com of listCompany | paginate: {itemsPerPage: 4, currentPage: p}">
     <th scope="row">{{com.id}}</th>
     <td>{{com.companyName}}</td>
     <td>{{com.shortname}}</td>
@@ -51,34 +84,38 @@
     <span *ngIf="com.companylogo">
       <td><img  width="80px" src='http://localhost:8080/logo/{{com.companylogo}}'></td>
     </span>
-    <span *ngIf="com.companyavatar">
-      <td>{{com.companyavatar}}</td>
-    </span>
+    <div [hidden]="showAndHide">
     <td>
-      <div [hidden]="showAndHide">
         <button type="submit" class="btn btn-primary" routerLink="/company/edit/{{com.id}}"><i class="fas fa-user-edit"
                                                                                                style="font-size: 20px"></i>Edit
         </button>
-      </div>
     </td>
+    </div>
+    <div [hidden]="showAndHide">
     <td>
-      <div [hidden]="showAndHide">
         <button type="button" class="btn btn-dark" (click)="getIdDelete(com.id)" data-toggle="modal" data-target="#exampleModalMessageDelete">
           <i class="fas fa-trash-alt"
              style="font-size: 20px"></i>Delete
         </button>
-      </div>
     </td>
-    <td>
-      <div [hidden]="showAndHide">
-      <button type="submit" class="btn btn-light" routerLink="/company/view/{{com.id}}"><i class="fas fa-calendar-week"
-                                                                                           style="font-size: 20px"></i>View
-      </button>
-      </div>
-    </td>
+    </div>
+      <td>
+        <button type="submit" class="btn btn-light" routerLink="/company/view/{{com.id}}"><i
+          class="fas fa-calendar-week"
+          style="font-size: 20px"></i>View
+        </button>
+      </td>
   </tr>
   </tbody>
 </table>
+<pagination-controls class="myPagination"
+                     previousLabel="previous"
+                     nextLabel="next"
+                     (pageChange)="p = $event" maxSize="3">
+</pagination-controls>
+
+
+
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -298,7 +335,11 @@
 
 
 
-
+<!--<div *ngIf="listCompa">-->
+<!--<div *ngFor="let list of listCompa">-->
+<!--  {{list.}}-->
+<!--</div>-->
+<!--</div>-->
 
 
 

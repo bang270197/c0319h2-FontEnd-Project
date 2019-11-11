@@ -23,13 +23,13 @@ export class ListComponent implements OnInit {
   loading = false;
 
   tagEditId: Tags;
-
+  tagView: Tags;
   info: any;
 
   messageEditTrue = true;
   messageEditFalse = true;
   messageEdit;
-
+   iddelete;
   messageDeleteTrue = true;
   messageDeleteFalse = true;
   messageDelete;
@@ -37,6 +37,11 @@ export class ListComponent implements OnInit {
               private route: Router) { }
 
   ngOnInit() {
+    this.info = {
+      token: this.token.getToken(),
+      username: this.token.getUsername(),
+      authorities: this.token.getAuthorities()
+    };
     this.getAllTag();
     this.formadd = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(4)]]
@@ -88,7 +93,10 @@ export class ListComponent implements OnInit {
      this.tagEditId = data;
    })
   }
-
+  logout() {
+    this.token.signOut();
+    this.route.navigate(['/login']);
+  }
   editTag(){
 
     this.tagService.editTags(this.tagEditId).subscribe(() => {
@@ -102,6 +110,27 @@ export class ListComponent implements OnInit {
       this.messageEditFalse = false;
     });
   }
+  viewTech(id: number){
+    this.tagService.getTagById(id).subscribe( tag =>{
+      this.tagView = tag;
+    })
+  }
 
 
+
+  getIdDelete(id: number){
+    debugger;
+    this.iddelete = id;
+  }
+  deleteById(){
+    debugger;
+    if (this.iddelete != null) {
+      this.tagService.deleteTag(this.iddelete).subscribe(() => {
+        this.getAllTag();
+
+      }, error => {
+        this.tagService.handleError(error);
+      });
+    }
+  }
 }

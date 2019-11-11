@@ -55,6 +55,8 @@ export class EditComponent implements OnInit {
   message1 = '';
 
 
+  formData1 = new FormData();
+  ArrayFile: string[] = [];
   showMessageTrue = true;
   showMessageFalse = true;
   constructor(private active: ActivatedRoute,
@@ -224,6 +226,13 @@ export class EditComponent implements OnInit {
     }
   }
 
+  selectArrayFile(event: any){
+    for (var  i =0 ; i< event.target.files.length;i++ ){
+      this.ArrayFile.push(event.target.files[i]);
+    }
+  }
+
+
   onSubmit() {
     if (this.language == null) {
       this.language = this.company.language;
@@ -274,6 +283,29 @@ export class EditComponent implements OnInit {
           // this.message1 = 'Sua anh that bai ';
         });
       }
+      if (this.ArrayFile.length >0) {
+
+        for (var i = 0; i < this.ArrayFile.length; i++) {
+          this.formData1.append('companyavatar', this.ArrayFile[i]);
+        }
+
+        // this.formData1.append('companyavatar', this.ArrayFile);
+        this.companyService.addImg(this.newCompany.id, this.formData1).subscribe(() => {
+          this.getCompanyById();
+          // this.messageAddSuccess = 'Them anh thanh cong';
+        }, error => {
+          // this.messageError = 'Them anh That bai';
+        });
+      }
+
+
+
+
+
+
+
+
+
       this.getCompanyById();
       this.showMessageTrue = false;
       this.showMessageFalse = true;

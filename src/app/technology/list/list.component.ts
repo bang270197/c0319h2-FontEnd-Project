@@ -31,7 +31,7 @@ export class ListComponent implements OnInit {
   messageDeleteTrue = true;
   messageDeleteFalse = true;
   messageDelete;
-
+  techView: Technology;
   idDelete;
   constructor(private fb: FormBuilder, private technologyService: TechnologyServiceService, private token: TokenStorageService,
               private route: Router
@@ -115,6 +115,13 @@ export class ListComponent implements OnInit {
   getIdDelete(id: number){
     this.idDelete = id;
   }
+
+  viewTech(id: number){
+    this.technologyService.getTechnologyById(id).subscribe( tech =>{
+      this.techView = tech;
+    })
+  }
+
 
 
   deleteById() {

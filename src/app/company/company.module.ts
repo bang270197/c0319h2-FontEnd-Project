@@ -9,6 +9,7 @@ import {AuthGuardServiceService} from '../auth/auth-guard-service.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DeleteComponent } from './delete/delete.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 
@@ -28,7 +29,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ]
 })
 export class CompanyModule {

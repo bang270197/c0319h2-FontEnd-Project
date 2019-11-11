@@ -6,6 +6,7 @@ import {RegisterComponent} from './register/register.component';
 import {AuthGuardServiceService} from './auth/auth-guard-service.service';
 import {AuthGuard1ServiceService} from './auth/auth-guard1-service.service';
 import {UserComponent} from './user/user.component';
+import {BossComponent} from './trangchu/boss/boss.component';
 
 const routes: Routes = [
   {
@@ -25,8 +26,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'trangchu',
     pathMatch: 'full'
+  },
+  {
+    path: 'trangchu',
+    component: BossComponent
   },
   {
     path: 'company', loadChildren: './company/company.module#CompanyModule'

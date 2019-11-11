@@ -1,61 +1,91 @@
-
-
-
-
-
 <div class="container">
   <div *ngIf="company">
-<div class="card text-center">
-  <div class="card-header">
-    <h3>Thông tin chi tiết công ty {{company.companyName}}</h3>
-  </div>
-  <div class="card-body">
-    <img style="float: left" width="300px" src='http://localhost:8080/logo/{{company.companylogo}}'>
-    <div class="row" style="padding-left: 20px">
+    <div class="row">
+      <div class="col-xs-4 col-sm-4 col-md-4">
+        <img style="float: left" width="300px" src='http://localhost:8080/logo/{{company.companylogo}}'>
+      </div>
+      <div class="col-xs-8 col-sm-8 col-md-8">
+        <h2>Tên công ty:{{company.companyName}}</h2>
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-6">
+            <i class="fas fa-address-card" style="font-size: 30px"></i>{{company.shortname}}<br>
+            <i class="fas fa-map-marker-alt" style="font-size: 30px"></i>{{company.address}}<br>
+            <i class="fab fa-internet-explorer" style="font-size: 30px"></i>{{company.website}}<br>
 
-      <div><i class="fas fa-address-card" style="font-size: 30px"></i>{{company.shortname}}</div>
-      <div style=" margin-left: 420px"><i class="fas fa-map-marker-alt" style="font-size: 30px"></i>{{company.address}}</div>
-
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-6">
+            <i style="font-size: 30px" class="fas fa-mobile-alt"></i>{{company.phonenumber}}<br>
+            <i class="fas fa-envelope-square" style="font-size: 30px"></i>{{company.email}}<br>
+            <i class="fas fa-paste" style="font-size: 30px"></i>{{company.relationship.name}}
+          </div>
+        </div>
+      </div>
     </div>
-   <div class="row" style="margin-top: 30px; padding-left: 20px">
-     <div><i class="fab fa-internet-explorer" style="font-size: 30px"></i>{{company.website}}</div>
-     <div style=" margin-left: 420px"><i style="font-size: 30px" class="fas fa-mobile-alt"></i>{{company.phonenumber}}</div>
-   </div>
-
-    <div  class="row" style="margin-top: 30px; padding-left: 20px">
-      <div><i class="fas fa-envelope-square" style="font-size: 30px"></i>{{company.email}}</div>
-      <div style=" margin-left: 420px"><i class="fas fa-paste" style="font-size: 30px"></i>{{company.relationship.name}}</div>
+    <hr class="my-4">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <h5>Information introduction:</h5>
+        <p>{{company.introductoryinformation}}</p>
+      </div>
     </div>
-
-    <div class="row" style="margin-top: 80px">
-     <h5>Information introduction:</h5>  <p>{{company.introductoryinformation}}</p>
-    </div>
-    <div class="row" style="margin-top: 20px">
+    <hr class="my-4">
+    <div class="row">
+      <div class="col-xs-3 col-sm-3 col-md-3">
         <h5>Technology:</h5>
         <div *ngFor="let tech of company.technology">
-          <button style="margin-left: 5px" type="button" class="btn btn-outline-warning">{{tech.name}}</button>
+          <button style="float: left; margin-left: 10px" type="button"
+                  class="btn btn-outline-warning">{{tech.name}}</button>
         </div>
-      <h5 style="margin-left: 150px">Language:</h5><br>
-      <div *ngFor="let lang of company.language">
-        <button style="margin-left: 5px" type="button" class="btn btn-outline-secondary">{{lang.name}}</button>
       </div>
-  </div>
-
-
-    <div class="row" style="margin-top: 20px">
-      <h5>Market:</h5>
-      <div *ngFor="let mar of company.market">
-        <button style="margin-left: 5px" type="button" class="btn btn-outline-primary">{{mar.name}}</button>
+      <div class="col-xs-3 col-sm-3 col-md-3">
+        <h5>Language:</h5>
+        <div *ngFor="let lang of company.language">
+          <button style="float: left; margin-left: 10px" type="button"
+                  class="btn btn-outline-secondary">{{lang.name}}</button>
+        </div>
       </div>
-      <h5 style="margin-left: 250px">Specialize:</h5><br>
-      <div *ngFor="let spec of company.specialize">
-        <button style="margin-left: 5px" type="button" class="btn btn-outline-secondary">{{spec.name}}</button>
+      <div class="col-xs-3 col-sm-3 col-md-3">
+        <h5>Market:</h5>
+        <div *ngFor="let mar of company.market">
+          <button style="float: left; margin-left: 10px" type="button"
+                  class="btn btn-outline-primary">{{mar.name}}</button>
+        </div>
+      </div>
+      <div class="col-xs-3 col-sm-3 col-md-3">
+        <h5>Language:</h5>
+        <div *ngFor="let spec of company.specialize">
+          <button style="float: left; margin-left: 10px" type="button"
+                  class="btn btn-outline-info">{{spec.name}}</button>
+        </div>
       </div>
     </div>
+    <hr class="my-4">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <h5>Note:</h5>
+        <p>{{company.note}}</p>
+      </div>
+    </div>
+    <hr class="my-4">
+    <div class="row">
 
-  <div class="card-footer text-muted">
-    <button type="button" class="btn btn-primary" routerLink="/company/list"><i class="fas fa-sign-out-alt" style="font-size: 20px"></i>Quay về</button>
+        <h5>Image Company:</h5>
+        <div *ngFor="let avatar of company.companyavatar">
+          <img width="150px" height="100px" src='http://localhost:8080/arrImg/{{avatar}}'
+               style="margin-left: 10px;margin-right: 20px">
+        </div>
+   <h5>Tag</h5>
+      <div *ngFor="let tag of company.tags">
+        <button type="button" style="float: left; margin-left: 10px" class="btn btn-outline-danger">{{tag.name}}</button>
+      </div>
+    </div>
+    <hr class="my-4">
+    <button type="button" class="btn btn-primary" routerLink="/company/list"><i class="fas fa-sign-out-alt"
+                                                                                style="font-size: 20px"></i>Quay về
+    </button>
   </div>
 </div>
-</div>
-</div>
+
+
+
+
